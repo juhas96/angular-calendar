@@ -28,7 +28,7 @@ export class CalendarNextViewDirective {
   /**
    * The current view
    */
-  @Input() view: CalendarView | 'month' | 'week' | 'day';
+  @Input() view: CalendarView | 'month' | 'week' | 'day' | 'resource';
 
   /**
    * The current view date
@@ -61,6 +61,7 @@ export class CalendarNextViewDirective {
       day: this.dateAdapter.addDays,
       week: this.dateAdapter.addWeeks,
       month: this.dateAdapter.addMonths,
+      resource: this.dateAdapter.addWeeks,
     }[this.view];
 
     if (this.view === CalendarView.Day) {
@@ -72,7 +73,11 @@ export class CalendarNextViewDirective {
           this.excludeDays
         )
       );
-    } else if (this.view === CalendarView.Week && this.daysInWeek) {
+    } else if (
+      (this.view === CalendarView.Week ||
+        this.view === CalendarView.Resource) &&
+      this.daysInWeek
+    ) {
       this.viewDateChange.emit(
         addDaysWithExclusions(
           this.dateAdapter,

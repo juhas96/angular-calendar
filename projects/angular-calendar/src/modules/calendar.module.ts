@@ -9,12 +9,14 @@ import {
 import { CalendarMonthModule } from './month/calendar-month.module';
 import { CalendarWeekModule } from './week/calendar-week.module';
 import { CalendarDayModule } from './day/calendar-day.module';
+import { CalendarResourceModule } from './resource/calendar-resource.module';
 import { CalendarUtils } from './common/calendar-utils/calendar-utils.provider';
 
 export * from './common/calendar-common.module';
 export * from './month/calendar-month.module';
 export * from './week/calendar-week.module';
 export * from './day/calendar-day.module';
+export * from './resource/calendar-resource.module';
 
 /**
  * The main module of this library. Example usage:
@@ -37,12 +39,14 @@ export * from './day/calendar-day.module';
     CalendarMonthModule,
     CalendarWeekModule,
     CalendarDayModule,
+    CalendarResourceModule,
   ],
   exports: [
     CalendarCommonModule,
     CalendarMonthModule,
     CalendarWeekModule,
     CalendarDayModule,
+    CalendarResourceModule,
   ],
 })
 export class CalendarModule {

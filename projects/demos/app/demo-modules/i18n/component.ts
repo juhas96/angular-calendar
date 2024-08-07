@@ -20,6 +20,7 @@ import { CustomDateFormatter } from './custom-date-formatter.provider';
 })
 export class DemoComponent {
   view: CalendarView = CalendarView.Month;
+  calendarDateView: CalendarView = CalendarView.Month;
 
   viewDate = new Date();
 
@@ -35,5 +36,7 @@ export class DemoComponent {
 
   setView(view: CalendarView) {
     this.view = view;
+    this.calendarDateView =
+      view === CalendarView.Resource ? CalendarView.Week : view;
   }
 }

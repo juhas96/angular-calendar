@@ -79,6 +79,10 @@ function endOfPeriod(period: CalendarPeriod, date: Date): Date {
 export class DemoComponent {
   view: CalendarView | CalendarPeriod = CalendarView.Month;
 
+  calendarDateView: CalendarView | CalendarPeriod = CalendarView.Month;
+
+  CalendarView = CalendarView;
+
   viewDate: Date = new Date();
 
   events: CalendarEvent[] = [];
@@ -95,12 +99,16 @@ export class DemoComponent {
     this.dateOrViewChanged();
   }
 
+  getView(): CalendarPeriod {
+    return this.view === CalendarView.Resource ? CalendarView.Week : this.view;
+  }
+
   increment(): void {
-    this.changeDate(addPeriod(this.view, this.viewDate, 1));
+    this.changeDate(addPeriod(this.getView(), this.viewDate, 1));
   }
 
   decrement(): void {
-    this.changeDate(subPeriod(this.view, this.viewDate, 1));
+    this.changeDate(subPeriod(this.getView(), this.viewDate, 1));
   }
 
   today(): void {
@@ -116,17 +124,19 @@ export class DemoComponent {
     this.dateOrViewChanged();
   }
 
-  changeView(view: CalendarPeriod): void {
+  changeView(view: CalendarView): void {
     this.view = view;
+    this.calendarDateView =
+      view === CalendarView.Resource ? CalendarView.Week : view;
     this.dateOrViewChanged();
   }
 
   dateOrViewChanged(): void {
     this.prevBtnDisabled = !this.dateIsValid(
-      endOfPeriod(this.view, subPeriod(this.view, this.viewDate, 1))
+      endOfPeriod(this.getView(), subPeriod(this.getView(), this.viewDate, 1))
     );
     this.nextBtnDisabled = !this.dateIsValid(
-      startOfPeriod(this.view, addPeriod(this.view, this.viewDate, 1))
+      startOfPeriod(this.getView(), addPeriod(this.getView(), this.viewDate, 1))
     );
     if (this.viewDate < this.minDate) {
       this.changeDate(this.minDate);

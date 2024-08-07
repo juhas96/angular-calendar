@@ -1,6 +1,7 @@
 .cal-day-view {
   /* stylelint-disable-next-line selector-type-no-unknown */
-  mwl-calendar-week-view-header {
+  mwl-calendar-week-view-header,
+  mwl-calendar-resource-view-header {
     display: none;
   }
 

@@ -42,6 +42,16 @@ import { CarbonAdComponent } from './carbon-ad/carbon-ad.component';
           },
         },
         {
+          path: 'week-view-scheduler',
+          loadChildren: () =>
+            import('./demo-modules/week-view-scheduler/module').then(
+              (m) => m.DemoModule
+            ),
+          data: {
+            label: 'Week view swheduler',
+          },
+        },
+        {
           path: 'async-events',
           loadChildren: () =>
             import('./demo-modules/async-events/module').then(

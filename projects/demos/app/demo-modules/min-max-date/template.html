@@ -19,30 +19,37 @@
     </div>
   </div>
   <div class="col-md-4">
-    <h3>{{ viewDate | calendarDate:(view + 'ViewTitle'):'en' }}</h3>
+    <h3>{{ viewDate | calendarDate:(calendarDateView + 'ViewTitle'):'en' }}</h3>
   </div>
   <div class="col-md-4">
     <div class="btn-group">
       <div
         class="btn btn-primary"
-        (click)="changeView('month')"
-        [class.active]="view === 'month'"
+        (click)="changeView(CalendarView.Month)"
+        [class.active]="view === CalendarView.Month"
       >
         Month
       </div>
       <div
         class="btn btn-primary"
-        (click)="changeView('week')"
-        [class.active]="view === 'week'"
+        (click)="changeView(CalendarView.Week)"
+        [class.active]="view === CalendarView.Week"
       >
         Week
       </div>
       <div
         class="btn btn-primary"
-        (click)="changeView('day')"
-        [class.active]="view === 'day'"
+        (click)="changeView(CalendarView.Day)"
+        [class.active]="view === CalendarView.Day"
       >
         Day
+      </div>
+      <div
+        class="btn btn-primary"
+        (click)="changeView(CalendarView.Resource)"
+        [class.active]="view === CalendarView.Resource"
+      >
+        Resource
       </div>
     </div>
   </div>

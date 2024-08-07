@@ -99,11 +99,12 @@ export class DemoComponent {
       title: 'A 3 day event',
       color: { ...colors.red },
       actions: this.actions,
-      allDay: true,
-      resizable: {
-        beforeStart: true,
-        afterEnd: true,
-      },
+      resources: [
+        { id: 1, title: 'Jean-Donald' },
+        { id: 2, title: 'Laeticia' },
+      ],
+      allDay: false,
+      resizable: undefined,
       draggable: true,
     },
     {
@@ -111,25 +112,74 @@ export class DemoComponent {
       title: 'An event with no end date',
       color: { ...colors.yellow },
       actions: this.actions,
+      resources: [{ id: 3, title: 'Matéo' }],
     },
     {
       start: subDays(endOfMonth(new Date()), 3),
       end: addDays(endOfMonth(new Date()), 3),
       title: 'A long event that spans 2 months',
       color: { ...colors.blue },
-      allDay: true,
+      allDay: false,
+      resources: [{ id: 4, title: 'Khephren' }],
     },
     {
       start: addHours(startOfDay(new Date()), 2),
-      end: addHours(new Date(), 2),
+      end: addHours(new Date(), 1),
       title: 'A draggable and resizable event',
       color: { ...colors.yellow },
       actions: this.actions,
-      resizable: {
-        beforeStart: true,
-        afterEnd: true,
-      },
+      resources: [
+        { id: 4, title: 'Khephren' },
+        { id: 3, title: 'Matéo' },
+      ],
       draggable: true,
+    },
+  ];
+
+  resources = [
+    {
+      id: 1,
+      title: 'Jean-Donald',
+    },
+    {
+      id: 2,
+      title: 'Laeticia',
+    },
+    {
+      id: 3,
+      title: 'Matéo',
+    },
+    {
+      id: 4,
+      title: 'Khephren',
+    },
+    {
+      id: 5,
+      title: 'Matt',
+    },
+    {
+      id: 6,
+      title: 'Romain',
+    },
+    {
+      id: 7,
+      title: 'Jordan',
+    },
+    {
+      id: 8,
+      title: 'Marie-France',
+    },
+    {
+      id: 9,
+      title: 'Lusna',
+    },
+    {
+      id: 10,
+      title: 'Edoinise',
+    },
+    {
+      id: 11,
+      title: 'Lussois',
     },
   ];
 
