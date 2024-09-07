@@ -42,6 +42,16 @@ import { CarbonAdComponent } from './carbon-ad/carbon-ad.component';
           },
         },
         {
+          path: 'resource-view',
+          loadChildren: () =>
+            import('./demo-modules/resource-view/module').then(
+              (m) => m.DemoModule
+            ),
+          data: {
+            label: 'Resource view',
+          },
+        },
+        {
           path: 'async-events',
           loadChildren: () =>
             import('./demo-modules/async-events/module').then(
