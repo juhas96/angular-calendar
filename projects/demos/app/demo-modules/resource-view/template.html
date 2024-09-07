@@ -79,7 +79,7 @@
     (eventTimesChanged)="eventTimesChanged($event)"
   >
   </mwl-calendar-week-view>
-  <mwl-calendar-day-view
+  <mwl-calendar-resource-day-view
     *ngSwitchCase="CalendarView.Day"
     [viewDate]="viewDate"
     [events]="events"
@@ -87,7 +87,7 @@
     (eventClicked)="handleEvent('Clicked', $event.event)"
     (eventTimesChanged)="eventTimesChanged($event)"
   >
-  </mwl-calendar-day-view>
+  </mwl-calendar-resource-day-view>
 </div>
 
 <!-- Everything you see below is just for the demo, you don't need to include it in your app -->
