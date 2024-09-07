@@ -28,7 +28,7 @@ export type CalendarDayViewBeforeRenderEvent =
 @Component({
   selector: 'mwl-calendar-resource-day-view',
   template: `
-    <mwl-calendar-week-view
+    <mwl-calendar-resource-week-view
       class="cal-day-view"
       [daysInWeek]="1"
       [viewDate]="viewDate"
@@ -61,7 +61,7 @@ export type CalendarDayViewBeforeRenderEvent =
       (hourSegmentClicked)="hourSegmentClicked.emit($event)"
       (eventTimesChanged)="eventTimesChanged.emit($event)"
       (beforeViewRender)="beforeViewRender.emit($event)"
-    ></mwl-calendar-week-view>
+    ></mwl-calendar-resource-week-view>
   `,
 })
 export class CalendarDayViewComponent {

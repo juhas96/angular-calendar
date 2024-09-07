@@ -10,6 +10,7 @@ import { CalendarMonthModule } from './month/calendar-month.module';
 import { CalendarWeekModule } from './week/calendar-week.module';
 import { CalendarDayModule } from './day/calendar-day.module';
 import { CalendarResourceDayModule } from './resource-day/calendar-resource-day.module';
+import { CalendarResourceWeekModule } from './resource-week/calendar-resource-week.module';
 import { CalendarUtils } from './common/calendar-utils/calendar-utils.provider';
 
 export * from './common/calendar-common.module';
@@ -39,6 +40,7 @@ export * from './day/calendar-day.module';
     CalendarWeekModule,
     CalendarDayModule,
     CalendarResourceDayModule,
+    CalendarResourceWeekModule,
   ],
   exports: [
     CalendarCommonModule,
@@ -46,6 +48,7 @@ export * from './day/calendar-day.module';
     CalendarWeekModule,
     CalendarDayModule,
     CalendarResourceDayModule,
+    CalendarResourceWeekModule,
   ],
 })
 export class CalendarModule {
