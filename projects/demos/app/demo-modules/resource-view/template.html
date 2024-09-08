@@ -67,7 +67,6 @@
     [activeDayIsOpen]="activeDayIsOpen"
     (dayClicked)="dayClicked($event.day)"
     (eventClicked)="handleEvent('Clicked', $event.event)"
-    (eventTimesChanged)="eventTimesChanged($event)"
   >
   </mwl-calendar-month-view>
   <mwl-calendar-resource-week-view
@@ -75,8 +74,8 @@
     [viewDate]="viewDate"
     [events]="events"
     [refresh]="refresh"
+    [resources]="resources"
     (eventClicked)="handleEvent('Clicked', $event.event)"
-    (eventTimesChanged)="eventTimesChanged($event)"
   >
   </mwl-calendar-resource-week-view>
   <mwl-calendar-resource-day-view
@@ -84,8 +83,8 @@
     [viewDate]="viewDate"
     [events]="events"
     [refresh]="refresh"
+    [resources]="resources"
     (eventClicked)="handleEvent('Clicked', $event.event)"
-    (eventTimesChanged)="eventTimesChanged($event)"
   >
   </mwl-calendar-resource-day-view>
 </div>

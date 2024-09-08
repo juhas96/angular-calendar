@@ -1,15 +1,14 @@
 import { Component, Input, TemplateRef } from '@angular/core';
-import { WeekViewHourSegment } from 'calendar-utils';
+import { ResourceWeekViewRowSegment } from '../../../common/calendar-utils/local-calendar-utils';
 
 @Component({
-  selector: 'mwl-calendar-resource-week-view-hour-segment',
+  selector: 'mwl-calendar-resource-week-view-row-segment',
   template: `
     <ng-template
       #defaultTemplate
       let-segment="segment"
-      let-locale="locale"
       let-segmentHeight="segmentHeight"
-      let-isTimeLabel="isTimeLabel"
+      let-resourceLabel="resourceLabel"
       let-daysInWeek="daysInWeek"
     >
       <div
@@ -20,19 +19,12 @@ import { WeekViewHourSegment } from 'calendar-utils';
                   ? 'hideDayHourSegment'
                   : 'hideWeekHourSegment')
         "
-        class="cal-hour-segment"
+        class="cal-row-segment"
         [style.height.px]="segmentHeight"
-        [class.cal-hour-start]="segment.isStart"
-        [class.cal-after-hour-start]="!segment.isStart"
-        [ngClass]="segment.cssClass"
+        [ngClass]="segment?.cssClass"
       >
-        <div class="cal-time" *ngIf="isTimeLabel">
-          {{
-            segment.displayDate
-              | calendarDate
-                : (daysInWeek === 1 ? 'dayViewHour' : 'weekViewHour')
-                : locale
-          }}
+        <div class="cal-time" *ngIf="resourceLabel">
+          {{ resourceLabel }}
         </div>
       </div>
     </ng-template>
@@ -40,23 +32,20 @@ import { WeekViewHourSegment } from 'calendar-utils';
       [ngTemplateOutlet]="customTemplate || defaultTemplate"
       [ngTemplateOutletContext]="{
         segment: segment,
-        locale: locale,
         segmentHeight: segmentHeight,
-        isTimeLabel: isTimeLabel,
+        resourceLabel: resourceLabel,
         daysInWeek: daysInWeek
       }"
     >
     </ng-template>
   `,
 })
-export class CalendarWeekViewHourSegmentComponent {
-  @Input() segment: WeekViewHourSegment;
+export class CalendarWeekViewRowSegmentComponent {
+  @Input() segment: ResourceWeekViewRowSegment;
 
   @Input() segmentHeight: number;
 
-  @Input() locale: string;
-
-  @Input() isTimeLabel: boolean;
+  @Input() resourceLabel: string;
 
   @Input() daysInWeek: number;
 

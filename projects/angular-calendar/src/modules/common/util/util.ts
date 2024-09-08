@@ -9,6 +9,7 @@ import {
   WeekViewAllDayEvent,
 } from 'calendar-utils';
 import { DateAdapter } from '../../../date-adapters/date-adapter';
+import { ResourceWeekViewRowEvent } from '../calendar-utils/local-calendar-utils';
 
 export const validateEvents = (events: CalendarEvent[]) => {
   const warn = (...args) => console.warn('angular-calendar', ...args);
@@ -69,6 +70,14 @@ export const trackByWeekTimeEvent = (
   index: number,
   weekEvent: WeekViewTimeEvent
 ) => (weekEvent.event.id ? weekEvent.event.id : weekEvent.event);
+
+export const trackByResourceWeekViewRowEvent = (
+  index: number,
+  resourceWeekViewRowEvent: ResourceWeekViewRowEvent
+) =>
+  resourceWeekViewRowEvent.event.id
+    ? resourceWeekViewRowEvent.event.id
+    : resourceWeekViewRowEvent.event;
 
 const MINUTES_IN_HOUR = 60;
 

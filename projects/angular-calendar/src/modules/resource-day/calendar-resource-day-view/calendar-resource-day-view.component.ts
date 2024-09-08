@@ -7,13 +7,13 @@ import {
 } from '@angular/core';
 import { CalendarEvent } from 'calendar-utils';
 import { Subject } from 'rxjs';
-import { CalendarEventTimesChangedEvent } from '../../common/calendar-event-times-changed-event/calendar-event-times-changed-event.interface';
 import { PlacementArray } from 'positioning';
-import { CalendarWeekViewBeforeRenderEvent } from '../../week/calendar-week.module';
+import { CalendarResourceWeekViewBeforeRenderEvent } from '../../resource-week/calendar-resource-week.module';
 import { ResizeCursors } from 'angular-resizable-element';
+import { CalendarResource } from '../../common/model/model';
 
 export type CalendarDayViewBeforeRenderEvent =
-  CalendarWeekViewBeforeRenderEvent;
+  CalendarResourceWeekViewBeforeRenderEvent;
 
 /**
  * Shows all events on a given day for resources. Example usage:
@@ -29,7 +29,7 @@ export type CalendarDayViewBeforeRenderEvent =
   selector: 'mwl-calendar-resource-day-view',
   template: `
     <mwl-calendar-resource-week-view
-      class="cal-day-view"
+      class="cal-resource-day-view"
       [daysInWeek]="1"
       [viewDate]="viewDate"
       [events]="events"
@@ -43,28 +43,26 @@ export type CalendarDayViewBeforeRenderEvent =
       [dayEndMinute]="dayEndMinute"
       [refresh]="refresh"
       [locale]="locale"
-      [eventSnapSize]="eventSnapSize"
       [tooltipPlacement]="tooltipPlacement"
       [tooltipTemplate]="tooltipTemplate"
       [tooltipAppendToBody]="tooltipAppendToBody"
       [tooltipDelay]="tooltipDelay"
-      [resizeCursors]="resizeCursors"
       [hourSegmentTemplate]="hourSegmentTemplate"
       [eventTemplate]="eventTemplate"
       [eventTitleTemplate]="eventTitleTemplate"
       [eventActionsTemplate]="eventActionsTemplate"
-      [snapDraggedEvents]="snapDraggedEvents"
       [allDayEventsLabelTemplate]="allDayEventsLabelTemplate"
       [currentTimeMarkerTemplate]="currentTimeMarkerTemplate"
-      [validateEventTimesChanged]="validateEventTimesChanged"
       (eventClicked)="eventClicked.emit($event)"
       (hourSegmentClicked)="hourSegmentClicked.emit($event)"
-      (eventTimesChanged)="eventTimesChanged.emit($event)"
       (beforeViewRender)="beforeViewRender.emit($event)"
+      [resources]="resources"
+      [keepUnassignedEvents]="keepUnassignedEvents"
+      [unassignedRessourceName]="unassignedRessourceName"
     ></mwl-calendar-resource-week-view>
   `,
 })
-export class CalendarDayViewComponent {
+export class CalendarResourceDayViewComponent {
   /**
    * The current view date
    */
@@ -77,6 +75,11 @@ export class CalendarDayViewComponent {
   @Input() events: CalendarEvent[] = [];
 
   /**
+   * An array of resources to display on view
+   */
+  @Input() resources: CalendarResource[] = [];
+
+  /**
    * The number of segments in an hour. Must divide equally into 60.
    */
   @Input() hourSegments: number = 2;
@@ -84,7 +87,7 @@ export class CalendarDayViewComponent {
   /**
    * The height in pixels of each hour segment
    */
-  @Input() hourSegmentHeight: number = 30;
+  @Input() hourSegmentHeight: number = 50;
 
   /**
    * The duration of each segment group in minutes
@@ -94,7 +97,7 @@ export class CalendarDayViewComponent {
   /**
    * The minimum height in pixels of each event
    */
-  @Input() minimumEventHeight: number = 30;
+  @Input() minimumEventHeight: number = 50;
 
   /**
    * The day start hours in 24 hour time. Must be 0-23
@@ -188,19 +191,21 @@ export class CalendarDayViewComponent {
   @Input() currentTimeMarkerTemplate: TemplateRef<any>;
 
   /**
-   * Allow you to customise where events can be dragged and resized to.
-   * Return true to allow dragging and resizing to the new location, or false to prevent it
-   */
-  @Input() validateEventTimesChanged: (
-    event: CalendarEventTimesChangedEvent
-  ) => boolean;
-
-  /**
    * Customise the document cursor when dragging to resize an event
    */
   @Input() resizeCursors: Partial<
     Pick<ResizeCursors, 'leftOrRight' | 'topOrBottom'>
   >;
+
+  /**
+   * Should we display events without assigned resources
+   */
+  @Input() keepUnassignedEvents: boolean = true;
+
+  /**
+   * Name to display unassigned resource. This apply only if keepUnassignedEvents is equal to true
+   */
+  @Input() unassignedRessourceName: string = 'Unassigned';
 
   /**
    * Called when an event title is clicked
@@ -217,12 +222,6 @@ export class CalendarDayViewComponent {
     date: Date;
     sourceEvent: MouseEvent;
   }>();
-
-  /**
-   * Called when an event is resized or dragged and dropped
-   */
-  @Output() eventTimesChanged =
-    new EventEmitter<CalendarEventTimesChangedEvent>();
 
   /**
    * An output that will be called before the view is rendered for the current day.

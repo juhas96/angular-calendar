@@ -7,7 +7,15 @@ import { CalendarEvent } from 'calendar-utils';
     <ng-template #defaultTemplate let-event="event" let-view="view">
       <span
         class="cal-event-title"
-        [innerHTML]="event.title | calendarEventTitle : view : event"
+        [innerHTML]="
+          (event.allDay
+            ? 'All day'
+            : (event.start | date : 'HH:mm') +
+              ' - ' +
+              (event.end | date : 'HH:mm')) +
+          ' | ' +
+          (event.title | calendarEventTitle : view : event)
+        "
         [attr.aria-hidden]="{} | calendarA11y : 'hideEventTitle'"
       >
       </span>

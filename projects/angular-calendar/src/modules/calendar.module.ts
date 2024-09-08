@@ -12,11 +12,14 @@ import { CalendarDayModule } from './day/calendar-day.module';
 import { CalendarResourceDayModule } from './resource-day/calendar-resource-day.module';
 import { CalendarResourceWeekModule } from './resource-week/calendar-resource-week.module';
 import { CalendarUtils } from './common/calendar-utils/calendar-utils.provider';
+export { ResourceCalendarEvent, CalendarResource } from './common/model/model';
 
 export * from './common/calendar-common.module';
 export * from './month/calendar-month.module';
 export * from './week/calendar-week.module';
+export * from './resource-week/calendar-resource-week.module';
 export * from './day/calendar-day.module';
+export * from './resource-day/calendar-resource-day.module';
 
 /**
  * The main module of this library. Example usage:

@@ -7,7 +7,6 @@ import {
 import {
   startOfDay,
   endOfDay,
-  subDays,
   addDays,
   endOfMonth,
   isSameDay,
@@ -18,13 +17,12 @@ import {
 import { Subject } from 'rxjs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import {
-  CalendarEvent,
   CalendarEventAction,
-  CalendarEventTimesChangedEvent,
   CalendarView,
+  CalendarResource,
+  ResourceCalendarEvent,
 } from 'angular-calendar';
 import { EventColor } from 'calendar-utils';
-import { CalendarResource, ResourceCalendarEvent } from './model';
 
 const colors: Record<string, EventColor> = {
   red: {
@@ -116,190 +114,151 @@ export class DemoComponent {
   ];
 
   events: ResourceCalendarEvent[] = [
-    // Events with loaded resources
+    // Events assigned to resources
     {
-      start: startOfWeek(new Date()),
-      end: addHours(startOfWeek(new Date()), 8),
-      title: 'RDV 1',
+      id: 1247,
+      start: addHours(startOfWeek(new Date()), 8),
+      end: addHours(startOfWeek(new Date()), 12),
+      title: 'Workshop with Dassault System',
       color: { ...colors.yellow },
       actions: this.actions,
-      allDay: true,
-      resizable: {
-        beforeStart: true,
-        afterEnd: true,
-      },
-      draggable: true,
+      allDay: false,
       resources: [this.getResourceById(1), this.getResourceById(4)],
     },
     {
-      start: addDays(startOfWeek(new Date()), 1),
-      end: addHours(addDays(startOfWeek(new Date()), 1), 8),
-      title: 'RDV 2',
+      id: 1248,
+      start: addHours(addDays(startOfWeek(new Date()), 1), 8),
+      end: addHours(addDays(startOfWeek(new Date()), 1), 12),
+      title: 'Workshop with Google',
       color: { ...colors.yellow },
       actions: this.actions,
-      allDay: true,
-      resizable: {
-        beforeStart: true,
-        afterEnd: true,
-      },
-      draggable: true,
+      allDay: false,
       resources: [this.getResourceById(1), this.getResourceById(4)],
     },
     {
-      start: addDays(startOfWeek(new Date()), 3),
-      end: addHours(addDays(startOfWeek(new Date()), 3), 8),
-      title: 'RDV 3',
+      id: 1249,
+      start: addHours(addDays(startOfWeek(new Date()), 3), 8),
+      end: addHours(addDays(startOfWeek(new Date()), 3), 12),
+      title: 'Workshop with Netflix',
       color: { ...colors.yellow },
       actions: this.actions,
-      allDay: true,
-      resizable: {
-        beforeStart: true,
-        afterEnd: true,
-      },
-      draggable: true,
-      resources: [this.getResourceById(1)],
+      allDay: false,
+      resources: [this.getResourceById(1), this.getResourceById(2)],
     },
     {
-      start: startOfWeek(new Date()),
-      end: addDays(startOfWeek(new Date()), 1),
-      title: 'RDV 4',
+      id: 1250,
+      start: addHours(startOfWeek(new Date()), 14),
+      end: addHours(startOfWeek(new Date()), 18),
+      title: 'Product demonstration',
       color: { ...colors.yellow },
       actions: this.actions,
-      allDay: true,
-      resizable: {
-        beforeStart: true,
-        afterEnd: true,
-      },
-      draggable: true,
+      allDay: false,
       resources: [this.getResourceById(2), this.getResourceById(4)],
     },
     {
-      start: addDays(startOfWeek(new Date()), 2),
-      end: addHours(addDays(startOfWeek(new Date()), 2), 8),
-      title: 'RDV 5',
+      id: 1251,
+      start: addHours(addDays(startOfWeek(new Date()), 2), 8),
+      end: addHours(addDays(startOfWeek(new Date()), 2), 12),
+      title: 'Call for tenders',
       color: { ...colors.yellow },
       actions: this.actions,
-      allDay: true,
-      resizable: {
-        beforeStart: true,
-        afterEnd: true,
-      },
-      draggable: true,
+      allDay: false,
       resources: [this.getResourceById(3)],
     },
     {
-      start: addHours(addDays(startOfWeek(new Date()), 4), 8),
-      end: addHours(addDays(startOfWeek(new Date()), 4), 12),
-      title: 'RDV 6',
-      color: { ...colors.yellow },
-      actions: this.actions,
-      allDay: true,
-      resizable: {
-        beforeStart: true,
-        afterEnd: true,
-      },
-      draggable: true,
-      resources: [this.getResourceById(3)],
-    },
-    {
+      id: 1252,
       start: addHours(addDays(startOfWeek(new Date()), 4), 14),
       end: addHours(addDays(startOfWeek(new Date()), 4), 18),
-      title: 'RDV 7',
+      title: 'Call for tenders',
       color: { ...colors.yellow },
       actions: this.actions,
-      allDay: true,
-      resizable: {
-        beforeStart: true,
-        afterEnd: true,
-      },
-      draggable: true,
+      allDay: false,
       resources: [this.getResourceById(3)],
     },
     {
+      id: 1253,
+      start: addHours(addDays(startOfWeek(new Date()), 4), 8),
+      end: addHours(addDays(startOfWeek(new Date()), 4), 12),
+      title: 'Workshop with Amazon',
+      color: { ...colors.yellow },
+      actions: this.actions,
+      allDay: false,
+      resources: [
+        this.getResourceById(1),
+        this.getResourceById(3),
+        this.getResourceById(5),
+      ],
+    },
+    {
+      id: 1254,
       start: addHours(addDays(startOfWeek(new Date()), 3), 8),
       end: addHours(addDays(startOfWeek(new Date()), 3), 12),
-      title: 'RDV 8',
+      title: 'Customer weekly meeting',
       color: { ...colors.yellow },
       actions: this.actions,
-      allDay: true,
-      resizable: {
-        beforeStart: true,
-        afterEnd: true,
-      },
-      draggable: true,
+      allDay: false,
       resources: [this.getResourceById(5)],
     },
     {
-      start: addHours(addDays(startOfWeek(new Date()), 3), 12),
+      id: 1255,
+      start: addHours(addDays(startOfWeek(new Date()), 3), 13),
       end: addHours(addDays(startOfWeek(new Date()), 3), 15),
-      title: 'RDV 9',
+      title: 'App Insight Verification',
       color: { ...colors.yellow },
       actions: this.actions,
-      allDay: true,
-      resizable: {
-        beforeStart: true,
-        afterEnd: true,
-      },
-      draggable: true,
+      allDay: false,
       resources: [this.getResourceById(5)],
     },
     {
+      id: 1256,
       start: addHours(addDays(startOfWeek(new Date()), 3), 15),
       end: addHours(addDays(startOfWeek(new Date()), 3), 19),
-      title: 'RDV 10',
+      title: 'Customers Tickets Review',
+      color: { ...colors.yellow },
+      actions: this.actions,
+      allDay: false,
+      resources: [this.getResourceById(5)],
+    },
+    {
+      id: 1257,
+      start: addHours(addDays(startOfWeek(new Date()), 5), 8),
+      end: addHours(addDays(startOfWeek(new Date()), 5), 12),
+      title: 'Team Building',
       color: { ...colors.yellow },
       actions: this.actions,
       allDay: true,
-      resizable: {
-        beforeStart: true,
-        afterEnd: true,
-      },
-      draggable: true,
-      resources: [this.getResourceById(5)],
+      resources: [
+        this.getResourceById(1),
+        this.getResourceById(2),
+        this.getResourceById(3),
+        this.getResourceById(4),
+        this.getResourceById(5),
+      ],
     },
-
-    // Events without loaded resources
+    // Events not assigned to a resource
     {
+      id: 1258,
       start: startOfWeek(new Date()),
-      end: addDays(startOfWeek(new Date()), 1),
+      end: addDays(startOfWeek(new Date()), 2),
       title: 'A 3 day event',
       color: { ...colors.red },
       actions: this.actions,
       allDay: true,
-      resizable: {
-        beforeStart: true,
-        afterEnd: true,
-      },
-      draggable: true,
-      resources: [this.getResourceById(2)],
     },
     {
+      id: 1259,
       start: startOfDay(new Date()),
       title: 'An event with no end date',
       color: { ...colors.yellow },
       actions: this.actions,
-      resources: [],
     },
     {
-      start: subDays(endOfMonth(new Date()), 3),
+      id: 1260,
+      start: addDays(startOfWeek(new Date()), 3),
       end: addDays(endOfMonth(new Date()), 3),
       title: 'A long event that spans 2 months',
       color: { ...colors.blue },
       allDay: true,
-      resources: [],
-    },
-    {
-      start: addHours(startOfDay(new Date()), 2),
-      end: addHours(new Date(), 2),
-      title: 'A draggable and resizable event',
-      color: { ...colors.yellow },
-      actions: this.actions,
-      resizable: {
-        beforeStart: true,
-        afterEnd: true,
-      },
-      draggable: true,
-      resources: [],
     },
   ];
 
@@ -325,24 +284,6 @@ export class DemoComponent {
       }
       this.viewDate = date;
     }
-  }
-
-  eventTimesChanged({
-    event,
-    newStart,
-    newEnd,
-  }: CalendarEventTimesChangedEvent): void {
-    this.events = this.events.map((iEvent) => {
-      if (iEvent === event) {
-        return {
-          ...event,
-          start: newStart,
-          end: newEnd,
-        };
-      }
-      return iEvent;
-    });
-    this.handleEvent('Dropped or resized', event);
   }
 
   handleEvent(action: string, event: ResourceCalendarEvent): void {
