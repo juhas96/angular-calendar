@@ -9,13 +9,11 @@ import {
   getMonthView,
   getWeekViewHeader,
   getWeekView,
-} from 'calendar-utils';
-import { DateAdapter } from '../../../date-adapters/date-adapter';
-import {
   getResourceWeekView,
   GetResourceWeekViewArgs,
   ResourceWeekView,
-} from './local-calendar-utils';
+} from 'calendar-utils';
+import { DateAdapter } from '../../../date-adapters/date-adapter';
 
 @Injectable()
 export class CalendarUtils {

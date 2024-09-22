@@ -1,5 +1,5 @@
 import { Component, Input, TemplateRef } from '@angular/core';
-import { ResourceWeekViewRowSegment } from '../../../common/calendar-utils/local-calendar-utils';
+import { ResourceWeekViewRowSegment } from 'calendar-utils';
 
 @Component({
   selector: 'mwl-calendar-resource-week-view-row-segment',

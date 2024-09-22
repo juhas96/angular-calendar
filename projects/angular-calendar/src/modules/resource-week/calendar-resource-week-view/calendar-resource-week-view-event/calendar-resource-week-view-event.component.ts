@@ -5,12 +5,12 @@ import {
   EventEmitter,
   TemplateRef,
 } from '@angular/core';
-import { WeekViewAllDayEvent } from 'calendar-utils';
-import { PlacementArray } from 'positioning';
 import {
+  WeekViewAllDayEvent,
   ResourceWeekViewRowColumn,
   ResourceWeekViewRowEvent,
-} from '../../../common/calendar-utils/local-calendar-utils';
+} from 'calendar-utils';
+import { PlacementArray } from 'positioning';
 
 @Component({
   selector: 'mwl-calendar-resource-week-view-event',

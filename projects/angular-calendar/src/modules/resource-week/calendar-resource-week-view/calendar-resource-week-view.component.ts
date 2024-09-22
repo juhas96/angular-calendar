@@ -17,8 +17,13 @@ import { Subject, Subscription } from 'rxjs';
 import {
   WeekDay,
   CalendarEvent,
+  CalendarResource,
   WeekViewHourColumn,
   WeekViewAllDayEventRow,
+  ResourcesMaxRowNumber,
+  ResourcesMaxRowsNumber,
+  ResourceWeekView,
+  ResourceWeekViewRowColumn,
 } from 'calendar-utils';
 import { CalendarUtils } from '../../common/calendar-utils/calendar-utils.provider';
 import {
@@ -33,13 +38,6 @@ import {
 } from '../../common/util/util';
 import { DateAdapter } from '../../../date-adapters/date-adapter';
 import { PlacementArray } from 'positioning';
-import { CalendarResource } from '../../common/model/model';
-import {
-  ResourcesMaxRowNumber,
-  ResourcesMaxRowsNumber,
-  ResourceWeekView,
-  ResourceWeekViewRowColumn,
-} from '../../common/calendar-utils/local-calendar-utils';
 
 export interface CalendarWeekViewBeforeRenderEvent extends ResourceWeekView {
   header: WeekDay[];
