@@ -1,0 +1,21 @@
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { CalendarResourceDayViewComponent } from './calendar-resource-day-view/calendar-resource-day-view.component';
+import { CalendarCommonModule } from '../common/calendar-common.module';
+import { CalendarResourceWeekModule } from '../resource-week/calendar-resource-week.module';
+import * as i0 from "@angular/core";
+export { CalendarResourceDayViewComponent as CalendarResourceDayViewComponent, } from './calendar-resource-day-view/calendar-resource-day-view.component';
+export class CalendarResourceDayModule {
+}
+CalendarResourceDayModule.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "14.3.0", ngImport: i0, type: CalendarResourceDayModule, deps: [], target: i0.ɵɵFactoryTarget.NgModule });
+CalendarResourceDayModule.ɵmod = i0.ɵɵngDeclareNgModule({ minVersion: "14.0.0", version: "14.3.0", ngImport: i0, type: CalendarResourceDayModule, declarations: [CalendarResourceDayViewComponent], imports: [CommonModule, CalendarCommonModule, CalendarResourceWeekModule], exports: [CalendarResourceDayViewComponent] });
+CalendarResourceDayModule.ɵinj = i0.ɵɵngDeclareInjector({ minVersion: "12.0.0", version: "14.3.0", ngImport: i0, type: CalendarResourceDayModule, imports: [CommonModule, CalendarCommonModule, CalendarResourceWeekModule] });
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "14.3.0", ngImport: i0, type: CalendarResourceDayModule, decorators: [{
+            type: NgModule,
+            args: [{
+                    imports: [CommonModule, CalendarCommonModule, CalendarResourceWeekModule],
+                    declarations: [CalendarResourceDayViewComponent],
+                    exports: [CalendarResourceDayViewComponent],
+                }]
+        }] });
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiY2FsZW5kYXItcmVzb3VyY2UtZGF5Lm1vZHVsZS5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbIi4uLy4uLy4uLy4uLy4uL3Byb2plY3RzL2FuZ3VsYXItY2FsZW5kYXIvc3JjL21vZHVsZXMvcmVzb3VyY2UtZGF5L2NhbGVuZGFyLXJlc291cmNlLWRheS5tb2R1bGUudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUEsT0FBTyxFQUFFLFFBQVEsRUFBRSxNQUFNLGVBQWUsQ0FBQztBQUN6QyxPQUFPLEVBQUUsWUFBWSxFQUFFLE1BQU0saUJBQWlCLENBQUM7QUFDL0MsT0FBTyxFQUFFLGdDQUFnQyxFQUFFLE1BQU0sbUVBQW1FLENBQUM7QUFDckgsT0FBTyxFQUFFLG9CQUFvQixFQUFFLE1BQU0sa0NBQWtDLENBQUM7QUFDeEUsT0FBTyxFQUFFLDBCQUEwQixFQUFFLE1BQU0sZ0RBQWdELENBQUM7O0FBRTVGLE9BQU8sRUFDTCxnQ0FBZ0MsSUFBSSxnQ0FBZ0MsR0FFckUsTUFBTSxtRUFBbUUsQ0FBQztBQU8zRSxNQUFNLE9BQU8seUJBQXlCOztzSEFBekIseUJBQXlCO3VIQUF6Qix5QkFBeUIsaUJBSHJCLGdDQUFnQyxhQURyQyxZQUFZLEVBQUUsb0JBQW9CLEVBQUUsMEJBQTBCLGFBRTlELGdDQUFnQzt1SEFFL0IseUJBQXlCLFlBSjFCLFlBQVksRUFBRSxvQkFBb0IsRUFBRSwwQkFBMEI7MkZBSTdELHlCQUF5QjtrQkFMckMsUUFBUTttQkFBQztvQkFDUixPQUFPLEVBQUUsQ0FBQyxZQUFZLEVBQUUsb0JBQW9CLEVBQUUsMEJBQTBCLENBQUM7b0JBQ3pFLFlBQVksRUFBRSxDQUFDLGdDQUFnQyxDQUFDO29CQUNoRCxPQUFPLEVBQUUsQ0FBQyxnQ0FBZ0MsQ0FBQztpQkFDNUMiLCJzb3VyY2VzQ29udGVudCI6WyJpbXBvcnQgeyBOZ01vZHVsZSB9IGZyb20gJ0Bhbmd1bGFyL2NvcmUnO1xuaW1wb3J0IHsgQ29tbW9uTW9kdWxlIH0gZnJvbSAnQGFuZ3VsYXIvY29tbW9uJztcbmltcG9ydCB7IENhbGVuZGFyUmVzb3VyY2VEYXlWaWV3Q29tcG9uZW50IH0gZnJvbSAnLi9jYWxlbmRhci1yZXNvdXJjZS1kYXktdmlldy9jYWxlbmRhci1yZXNvdXJjZS1kYXktdmlldy5jb21wb25lbnQnO1xuaW1wb3J0IHsgQ2FsZW5kYXJDb21tb25Nb2R1bGUgfSBmcm9tICcuLi9jb21tb24vY2FsZW5kYXItY29tbW9uLm1vZHVsZSc7XG5pbXBvcnQgeyBDYWxlbmRhclJlc291cmNlV2Vla01vZHVsZSB9IGZyb20gJy4uL3Jlc291cmNlLXdlZWsvY2FsZW5kYXItcmVzb3VyY2Utd2Vlay5tb2R1bGUnO1xuXG5leHBvcnQge1xuICBDYWxlbmRhclJlc291cmNlRGF5Vmlld0NvbXBvbmVudCBhcyBDYWxlbmRhclJlc291cmNlRGF5Vmlld0NvbXBvbmVudCxcbiAgQ2FsZW5kYXJEYXlWaWV3QmVmb3JlUmVuZGVyRXZlbnQgYXMgQ2FsZW5kYXJSZXNvdXJjZURheVZpZXdCZWZvcmVSZW5kZXJFdmVudCxcbn0gZnJvbSAnLi9jYWxlbmRhci1yZXNvdXJjZS1kYXktdmlldy9jYWxlbmRhci1yZXNvdXJjZS1kYXktdmlldy5jb21wb25lbnQnO1xuXG5ATmdNb2R1bGUoe1xuICBpbXBvcnRzOiBbQ29tbW9uTW9kdWxlLCBDYWxlbmRhckNvbW1vbk1vZHVsZSwgQ2FsZW5kYXJSZXNvdXJjZVdlZWtNb2R1bGVdLFxuICBkZWNsYXJhdGlvbnM6IFtDYWxlbmRhclJlc291cmNlRGF5Vmlld0NvbXBvbmVudF0sXG4gIGV4cG9ydHM6IFtDYWxlbmRhclJlc291cmNlRGF5Vmlld0NvbXBvbmVudF0sXG59KVxuZXhwb3J0IGNsYXNzIENhbGVuZGFyUmVzb3VyY2VEYXlNb2R1bGUge31cbiJdfQ==
