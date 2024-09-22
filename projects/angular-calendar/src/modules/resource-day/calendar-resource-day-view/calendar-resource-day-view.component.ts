@@ -5,12 +5,11 @@ import {
   EventEmitter,
   TemplateRef,
 } from '@angular/core';
-import { CalendarEvent } from 'calendar-utils';
+import { CalendarEvent, CalendarResource } from 'calendar-utils';
 import { Subject } from 'rxjs';
 import { PlacementArray } from 'positioning';
 import { CalendarResourceWeekViewBeforeRenderEvent } from '../../resource-week/calendar-resource-week.module';
 import { ResizeCursors } from 'angular-resizable-element';
-import { CalendarResource } from '../../common/model/model';
 
 export type CalendarDayViewBeforeRenderEvent =
   CalendarResourceWeekViewBeforeRenderEvent;

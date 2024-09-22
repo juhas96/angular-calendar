@@ -20,7 +20,7 @@ import {
   CalendarEventAction,
   CalendarView,
   CalendarResource,
-  ResourceCalendarEvent,
+  CalendarEvent,
 } from 'angular-calendar';
 import { EventColor } from 'calendar-utils';
 
@@ -67,21 +67,21 @@ export class DemoComponent {
 
   modalData: {
     action: string;
-    event: ResourceCalendarEvent;
+    event: CalendarEvent;
   };
 
   actions: CalendarEventAction[] = [
     {
       label: '<i class="fas fa-fw fa-pencil-alt"></i>',
       a11yLabel: 'Edit',
-      onClick: ({ event }: { event: ResourceCalendarEvent }): void => {
+      onClick: ({ event }: { event: CalendarEvent }): void => {
         this.handleEvent('Edited', event);
       },
     },
     {
       label: '<i class="fas fa-fw fa-trash-alt"></i>',
       a11yLabel: 'Delete',
-      onClick: ({ event }: { event: ResourceCalendarEvent }): void => {
+      onClick: ({ event }: { event: CalendarEvent }): void => {
         this.events = this.events.filter((iEvent) => iEvent !== event);
         this.handleEvent('Deleted', event);
       },
@@ -113,7 +113,7 @@ export class DemoComponent {
     },
   ];
 
-  events: ResourceCalendarEvent[] = [
+  events: CalendarEvent[] = [
     // Events assigned to resources
     {
       id: 1247,
@@ -266,13 +266,7 @@ export class DemoComponent {
 
   constructor(private modal: NgbModal) {}
 
-  dayClicked({
-    date,
-    events,
-  }: {
-    date: Date;
-    events: ResourceCalendarEvent[];
-  }): void {
+  dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
     if (isSameMonth(date, this.viewDate)) {
       if (
         (isSameDay(this.viewDate, date) && this.activeDayIsOpen === true) ||
@@ -286,7 +280,7 @@ export class DemoComponent {
     }
   }
 
-  handleEvent(action: string, event: ResourceCalendarEvent): void {
+  handleEvent(action: string, event: CalendarEvent): void {
     this.modalData = { event, action };
     this.modal.open(this.modalContent, { size: 'lg' });
   }
@@ -308,7 +302,7 @@ export class DemoComponent {
     ];
   }
 
-  deleteEvent(eventToDelete: ResourceCalendarEvent) {
+  deleteEvent(eventToDelete: CalendarEvent) {
     this.events = this.events.filter((event) => event !== eventToDelete);
   }
 

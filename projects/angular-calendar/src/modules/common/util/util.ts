@@ -7,9 +7,9 @@ import {
   ViewPeriod,
   WeekDay,
   WeekViewAllDayEvent,
+  ResourceWeekViewRowEvent,
 } from 'calendar-utils';
 import { DateAdapter } from '../../../date-adapters/date-adapter';
-import { ResourceWeekViewRowEvent } from '../calendar-utils/local-calendar-utils';
 
 export const validateEvents = (events: CalendarEvent[]) => {
   const warn = (...args) => console.warn('angular-calendar', ...args);
