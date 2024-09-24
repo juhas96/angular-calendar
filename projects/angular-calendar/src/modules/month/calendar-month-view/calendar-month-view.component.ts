@@ -451,6 +451,7 @@ export class CalendarMonthViewComponent
       excluded: this.excludeDays,
       weekendDays: this.weekendDays,
     });
+    console.log(this.columnHeaders);
   }
 
   protected refreshBody(): void {

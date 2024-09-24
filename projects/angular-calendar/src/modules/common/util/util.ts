@@ -7,6 +7,7 @@ import {
   ViewPeriod,
   WeekDay,
   WeekViewAllDayEvent,
+  ResourceWeekViewRowEvent,
 } from 'calendar-utils';
 import { DateAdapter } from '../../../date-adapters/date-adapter';
 
@@ -69,6 +70,14 @@ export const trackByWeekTimeEvent = (
   index: number,
   weekEvent: WeekViewTimeEvent
 ) => (weekEvent.event.id ? weekEvent.event.id : weekEvent.event);
+
+export const trackByResourceWeekViewRowEvent = (
+  index: number,
+  resourceWeekViewRowEvent: ResourceWeekViewRowEvent
+) =>
+  resourceWeekViewRowEvent.event.id
+    ? resourceWeekViewRowEvent.event.id
+    : resourceWeekViewRowEvent.event;
 
 const MINUTES_IN_HOUR = 60;
 
@@ -191,6 +200,34 @@ export function getWeekViewPeriod(
     }
     return { viewStart, viewEnd };
   }
+}
+export function getMonthViewPeriod(
+  dateAdapter: DateAdapter,
+  viewDate: Date,
+  excluded: number[] = []
+): { viewStart: Date; viewEnd: Date } {
+  // Get the start of the month
+  let viewStart = dateAdapter.startOfMonth(viewDate);
+  const endOfMonth = dateAdapter.endOfMonth(viewDate);
+
+  // Adjust viewStart based on exclusions
+  while (
+    excluded.indexOf(dateAdapter.getDay(viewStart)) > -1 &&
+    viewStart < endOfMonth
+  ) {
+    viewStart = dateAdapter.addDays(viewStart, 1);
+  }
+
+  // Adjust viewEnd based on exclusions
+  let viewEnd = endOfMonth;
+  while (
+    excluded.indexOf(dateAdapter.getDay(viewEnd)) > -1 &&
+    viewEnd > viewStart
+  ) {
+    viewEnd = dateAdapter.subDays(viewEnd, 1);
+  }
+
+  return { viewStart, viewEnd };
 }
 
 export function isWithinThreshold({ x, y }: { x: number; y: number }) {
