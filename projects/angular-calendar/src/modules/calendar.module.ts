@@ -21,6 +21,7 @@ export * from './week/calendar-week.module';
 export * from './resource-week/calendar-resource-week.module';
 export * from './day/calendar-day.module';
 export * from './resource-day/calendar-resource-day.module';
+export * from './resource-month/calendar-resource-month.module';
 
 /**
  * The main module of this library. Example usage:
