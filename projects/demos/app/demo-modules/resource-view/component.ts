@@ -118,7 +118,7 @@ export class DemoComponent {
     {
       id: 1247,
       start: addHours(startOfWeek(new Date()), 8),
-      end: addHours(startOfWeek(new Date()), 12),
+      end: addHours(startOfWeek(new Date()), 48),
       title: 'Workshop with Dassault System',
       color: { ...colors.yellow },
       actions: this.actions,

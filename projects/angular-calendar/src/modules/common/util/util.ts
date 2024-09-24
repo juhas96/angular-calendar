@@ -201,6 +201,34 @@ export function getWeekViewPeriod(
     return { viewStart, viewEnd };
   }
 }
+export function getMonthViewPeriod(
+  dateAdapter: DateAdapter,
+  viewDate: Date,
+  excluded: number[] = []
+): { viewStart: Date; viewEnd: Date } {
+  // Get the start of the month
+  let viewStart = dateAdapter.startOfMonth(viewDate);
+  const endOfMonth = dateAdapter.endOfMonth(viewDate);
+
+  // Adjust viewStart based on exclusions
+  while (
+    excluded.indexOf(dateAdapter.getDay(viewStart)) > -1 &&
+    viewStart < endOfMonth
+  ) {
+    viewStart = dateAdapter.addDays(viewStart, 1);
+  }
+
+  // Adjust viewEnd based on exclusions
+  let viewEnd = endOfMonth;
+  while (
+    excluded.indexOf(dateAdapter.getDay(viewEnd)) > -1 &&
+    viewEnd > viewStart
+  ) {
+    viewEnd = dateAdapter.subDays(viewEnd, 1);
+  }
+
+  return { viewStart, viewEnd };
+}
 
 export function isWithinThreshold({ x, y }: { x: number; y: number }) {
   const DRAG_THRESHOLD = 1;

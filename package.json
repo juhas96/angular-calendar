@@ -107,7 +107,7 @@
     "@compodoc/compodoc": "^1.1.19",
     "@fortawesome/fontawesome-free": "^6.2.1",
     "@ng-bootstrap/ng-bootstrap": "^14.0.0",
-    "@perfectmemory/ngx-contextmenu": "^14.1.1",
+    "@perfectmemory/ngx-contextmenu": "^15.1.1",
     "@popperjs/core": "^2.11.6",
     "@schematics/angular": "^15.0.3",
     "@sinonjs/fake-timers": "^9.1.2",

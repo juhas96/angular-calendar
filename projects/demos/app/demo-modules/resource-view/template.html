@@ -59,16 +59,15 @@
 </div>
 <br />
 <div [ngSwitch]="view">
-  <mwl-calendar-month-view
+  <mwl-calendar-resource-month-view
     *ngSwitchCase="CalendarView.Month"
     [viewDate]="viewDate"
     [events]="events"
     [refresh]="refresh"
-    [activeDayIsOpen]="activeDayIsOpen"
-    (dayClicked)="dayClicked($event.day)"
+    [resources]="resources"
     (eventClicked)="handleEvent('Clicked', $event.event)"
   >
-  </mwl-calendar-month-view>
+  </mwl-calendar-resource-month-view>
   <mwl-calendar-resource-week-view
     *ngSwitchCase="CalendarView.Week"
     [viewDate]="viewDate"
