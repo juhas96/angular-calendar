@@ -12,6 +12,10 @@ export declare class CalendarAngularDateFormatter implements CalendarDateFormatt
      */
     monthViewColumnHeader({ date, locale }: DateFormatterParams): string;
     /**
+     * The number of week for date
+     */
+    getWeekNumber({ date }: DateFormatterParams): number;
+    /**
      * The month view cell day number
      */
     monthViewDayNumber({ date, locale }: DateFormatterParams): string;

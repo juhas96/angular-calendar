@@ -50,7 +50,7 @@
     "@scarf/scarf": "^1.1.1",
     "angular-draggable-droppable": "^8.0.0",
     "angular-resizable-element": "^7.0.0",
-    "calendar-utils": "github:jeandonaldroselin/calendar-utils#dist",
+    "calendar-utils": "github:juhas96/calendar-utils#dist",
     "positioning": "^2.0.1",
     "tslib": "^2.4.1"
   },

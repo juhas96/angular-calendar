@@ -3,6 +3,7 @@ import { CalendarEvent, WeekDay } from 'calendar-utils';
 import * as i0 from "@angular/core";
 export declare class CalendarMonthViewHeaderComponent {
     days: WeekDay[];
+    weeks: number[];
     locale: string;
     customTemplate: TemplateRef<any>;
     dayHeaderClicked: EventEmitter<{
@@ -18,5 +19,5 @@ export declare class CalendarMonthViewHeaderComponent {
     }>;
     trackByWeekDayHeaderDate: (index: number, day: WeekDay) => string;
     static ɵfac: i0.ɵɵFactoryDeclaration<CalendarMonthViewHeaderComponent, never>;
-    static ɵcmp: i0.ɵɵComponentDeclaration<CalendarMonthViewHeaderComponent, "mwl-calendar-resource-month-view-header", never, { "days": "days"; "locale": "locale"; "customTemplate": "customTemplate"; }, { "dayHeaderClicked": "dayHeaderClicked"; "eventDropped": "eventDropped"; "dragEnter": "dragEnter"; }, never, never, false, never>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<CalendarMonthViewHeaderComponent, "mwl-calendar-resource-month-view-header", never, { "days": "days"; "weeks": "weeks"; "locale": "locale"; "customTemplate": "customTemplate"; }, { "dayHeaderClicked": "dayHeaderClicked"; "eventDropped": "eventDropped"; "dragEnter": "dragEnter"; }, never, never, false, never>;
 }

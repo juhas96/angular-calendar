@@ -801,7 +801,7 @@ function getWeekViewPeriod(dateAdapter, viewDate, weekStartsOn, excluded = [], d
 function getMonthViewPeriod(dateAdapter, viewDate, excluded = []) {
     // Get the start of the month
     let viewStart = dateAdapter.startOfMonth(viewDate);
-    const endOfMonth = dateAdapter.endOfMonth(viewDate);
+    const endOfMonth = new Date('12/31/2024');
     // Adjust viewStart based on exclusions
     while (excluded.indexOf(dateAdapter.getDay(viewStart)) > -1 &&
         viewStart < endOfMonth) {
@@ -1008,7 +1008,13 @@ class CalendarAngularDateFormatter {
      * The month view header week day labels
      */
     monthViewColumnHeader({ date, locale }) {
-        return formatDate(date, 'EE', locale);
+        return formatDate(date, 'EEEEE', locale);
+    }
+    /**
+     * The number of week for date
+     */
+    getWeekNumber({ date }) {
+        return this.dateAdapter.getISOWeek(date);
     }
     /**
      * The month view cell day number
@@ -6241,7 +6247,7 @@ class CalendarMonthViewHeaderComponent {
     }
 }
 CalendarMonthViewHeaderComponent.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "15.0.3", ngImport: i0, type: CalendarMonthViewHeaderComponent, deps: [], target: i0.ɵɵFactoryTarget.Component });
-CalendarMonthViewHeaderComponent.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "15.0.3", type: CalendarMonthViewHeaderComponent, selector: "mwl-calendar-resource-month-view-header", inputs: { days: "days", locale: "locale", customTemplate: "customTemplate" }, outputs: { dayHeaderClicked: "dayHeaderClicked", eventDropped: "eventDropped", dragEnter: "dragEnter" }, ngImport: i0, template: `
+CalendarMonthViewHeaderComponent.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "15.0.3", type: CalendarMonthViewHeaderComponent, selector: "mwl-calendar-resource-month-view-header", inputs: { days: "days", weeks: "weeks", locale: "locale", customTemplate: "customTemplate" }, outputs: { dayHeaderClicked: "dayHeaderClicked", eventDropped: "eventDropped", dragEnter: "dragEnter" }, ngImport: i0, template: `
     <ng-template
       #defaultTemplate
       let-days="days"
@@ -6251,6 +6257,11 @@ CalendarMonthViewHeaderComponent.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion:
       let-trackByWeekDayHeaderDate="trackByWeekDayHeaderDate"
       let-dragEnter="dragEnter"
     >
+      <div class="cal-day-headers" role="row">
+        <div *ngFor="let day of days" class="cal-header">
+          T: {{ day.date | calendarDate : 'getWeekNumber' : locale }}
+        </div>
+      </div>
       <div class="cal-day-headers" role="row">
         <div
           class="cal-header"
@@ -6309,6 +6320,11 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "15.0.3", ngImpor
       let-dragEnter="dragEnter"
     >
       <div class="cal-day-headers" role="row">
+        <div *ngFor="let day of days" class="cal-header">
+          T: {{ day.date | calendarDate : 'getWeekNumber' : locale }}
+        </div>
+      </div>
+      <div class="cal-day-headers" role="row">
         <div
           class="cal-header"
           *ngFor="let day of days; trackBy: trackByWeekDayHeaderDate"
@@ -6353,6 +6369,8 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "15.0.3", ngImpor
   `,
                 }]
         }], propDecorators: { days: [{
+                type: Input
+            }], weeks: [{
                 type: Input
             }], locale: [{
                 type: Input
@@ -6779,6 +6797,10 @@ class CalendarMonthViewComponent {
         /**
          * @hidden
          */
+        this.weeks = [];
+        /**
+         * @hidden
+         */
         this.trackByHourColumn = (index, column) => column.hours[0] ? column.hours[0].segments[0].date.toISOString() : column;
         /**
          * @hidden
@@ -6809,6 +6831,7 @@ class CalendarMonthViewComponent {
             changes.excludeDays ||
             changes.weekendDays ||
             changes.daysInWeek ||
+            changes.weeks ||
             changes.weekStartsOn;
         const refreshBody = changes.viewDate ||
             changes.dayStartHour ||
@@ -6878,6 +6901,9 @@ class CalendarMonthViewComponent {
             weekendDays: this.weekendDays,
             ...getMonthViewPeriod(this.dateAdapter, this.viewDate, this.excludeDays),
         });
+        this.weeks = [
+            ...new Set(this.days.map((day) => this.dateAdapter.getISOWeek(day.date))).values(),
+        ];
     }
     refreshBody() {
         this.view = this.getResourceWeekView(this.events, this.resources);
@@ -6927,9 +6953,10 @@ class CalendarMonthViewComponent {
 }
 CalendarMonthViewComponent.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "15.0.3", ngImport: i0, type: CalendarMonthViewComponent, deps: [{ token: i0.ChangeDetectorRef }, { token: CalendarUtils }, { token: LOCALE_ID }, { token: DateAdapter }, { token: i0.ElementRef }], target: i0.ɵɵFactoryTarget.Component });
 CalendarMonthViewComponent.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "15.0.3", type: CalendarMonthViewComponent, selector: "mwl-calendar-resource-month-view", inputs: { viewDate: "viewDate", events: "events", resources: "resources", excludeDays: "excludeDays", refresh: "refresh", locale: "locale", tooltipPlacement: "tooltipPlacement", tooltipTemplate: "tooltipTemplate", tooltipAppendToBody: "tooltipAppendToBody", tooltipDelay: "tooltipDelay", weekStartsOn: "weekStartsOn", headerTemplate: "headerTemplate", eventTemplate: "eventTemplate", eventTitleTemplate: "eventTitleTemplate", eventActionsTemplate: "eventActionsTemplate", precision: "precision", weekendDays: "weekendDays", hourSegments: "hourSegments", hourDuration: "hourDuration", hourSegmentHeight: "hourSegmentHeight", minimumEventHeight: "minimumEventHeight", dayStartHour: "dayStartHour", dayStartMinute: "dayStartMinute", dayEndHour: "dayEndHour", dayEndMinute: "dayEndMinute", hourSegmentTemplate: "hourSegmentTemplate", allDayEventsLabelTemplate: "allDayEventsLabelTemplate", daysInWeek: "daysInWeek", currentTimeMarkerTemplate: "currentTimeMarkerTemplate", keepUnassignedEvents: "keepUnassignedEvents", unassignedRessourceName: "unassignedRessourceName" }, outputs: { dayHeaderClicked: "dayHeaderClicked", eventClicked: "eventClicked", beforeViewRender: "beforeViewRender", hourSegmentClicked: "hourSegmentClicked" }, usesOnChanges: true, ngImport: i0, template: `
-    <div class="cal-resource-week-view" role="grid">
+    <div class="cal-resource-month-view" role="grid">
       <mwl-calendar-resource-month-view-header
         [days]="days"
+        [weeks]="weeks"
         [locale]="locale"
         [customTemplate]="headerTemplate"
         (dayHeaderClicked)="dayHeaderClicked.emit($event)"
@@ -7054,15 +7081,16 @@ CalendarMonthViewComponent.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0
         </div>
       </div>
     </div>
-  `, isInline: true, dependencies: [{ kind: "directive", type: i1.NgClass, selector: "[ngClass]", inputs: ["class", "ngClass"] }, { kind: "directive", type: i1.NgForOf, selector: "[ngFor][ngForOf]", inputs: ["ngForOf", "ngForTrackBy", "ngForTemplate"] }, { kind: "directive", type: i1.NgIf, selector: "[ngIf]", inputs: ["ngIf", "ngIfThen", "ngIfElse"] }, { kind: "directive", type: i1.NgTemplateOutlet, selector: "[ngTemplateOutlet]", inputs: ["ngTemplateOutletContext", "ngTemplateOutlet", "ngTemplateOutletInjector"] }, { kind: "directive", type: i2.DroppableDirective, selector: "[mwlDroppable]", inputs: ["dragOverClass", "dragActiveClass", "validateDrop"], outputs: ["dragEnter", "dragLeave", "dragOver", "drop"] }, { kind: "component", type: CalendarMonthViewHeaderComponent, selector: "mwl-calendar-resource-month-view-header", inputs: ["days", "locale", "customTemplate"], outputs: ["dayHeaderClicked", "eventDropped", "dragEnter"] }, { kind: "component", type: CalendarMonthViewEventComponent, selector: "mwl-calendar-resource-month-view-event", inputs: ["locale", "weekEvent", "tooltipPlacement", "tooltipAppendToBody", "tooltipDisabled", "tooltipDelay", "customTemplate", "eventTitleTemplate", "eventActionsTemplate", "tooltipTemplate", "column", "daysInWeek"], outputs: ["eventClicked"] }, { kind: "component", type: CalendarMonthViewRowSegmentComponent, selector: "mwl-calendar-resource-month-view-row-segment", inputs: ["segment", "segmentHeight", "resourceLabel", "daysInWeek", "customTemplate"] }] });
+  `, isInline: true, dependencies: [{ kind: "directive", type: i1.NgClass, selector: "[ngClass]", inputs: ["class", "ngClass"] }, { kind: "directive", type: i1.NgForOf, selector: "[ngFor][ngForOf]", inputs: ["ngForOf", "ngForTrackBy", "ngForTemplate"] }, { kind: "directive", type: i1.NgIf, selector: "[ngIf]", inputs: ["ngIf", "ngIfThen", "ngIfElse"] }, { kind: "directive", type: i1.NgTemplateOutlet, selector: "[ngTemplateOutlet]", inputs: ["ngTemplateOutletContext", "ngTemplateOutlet", "ngTemplateOutletInjector"] }, { kind: "directive", type: i2.DroppableDirective, selector: "[mwlDroppable]", inputs: ["dragOverClass", "dragActiveClass", "validateDrop"], outputs: ["dragEnter", "dragLeave", "dragOver", "drop"] }, { kind: "component", type: CalendarMonthViewHeaderComponent, selector: "mwl-calendar-resource-month-view-header", inputs: ["days", "weeks", "locale", "customTemplate"], outputs: ["dayHeaderClicked", "eventDropped", "dragEnter"] }, { kind: "component", type: CalendarMonthViewEventComponent, selector: "mwl-calendar-resource-month-view-event", inputs: ["locale", "weekEvent", "tooltipPlacement", "tooltipAppendToBody", "tooltipDisabled", "tooltipDelay", "customTemplate", "eventTitleTemplate", "eventActionsTemplate", "tooltipTemplate", "column", "daysInWeek"], outputs: ["eventClicked"] }, { kind: "component", type: CalendarMonthViewRowSegmentComponent, selector: "mwl-calendar-resource-month-view-row-segment", inputs: ["segment", "segmentHeight", "resourceLabel", "daysInWeek", "customTemplate"] }] });
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "15.0.3", ngImport: i0, type: CalendarMonthViewComponent, decorators: [{
             type: Component,
             args: [{
                     selector: 'mwl-calendar-resource-month-view',
                     template: `
-    <div class="cal-resource-week-view" role="grid">
+    <div class="cal-resource-month-view" role="grid">
       <mwl-calendar-resource-month-view-header
         [days]="days"
+        [weeks]="weeks"
         [locale]="locale"
         [customTemplate]="headerTemplate"
         (dayHeaderClicked)="dayHeaderClicked.emit($event)"

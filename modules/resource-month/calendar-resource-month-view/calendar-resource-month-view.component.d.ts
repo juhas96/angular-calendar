@@ -247,6 +247,10 @@ export declare class CalendarMonthViewComponent implements OnChanges, OnInit, On
     /**
      * @hidden
      */
+    weeks: number[];
+    /**
+     * @hidden
+     */
     constructor(cdr: ChangeDetectorRef, utils: CalendarUtils, locale: string, dateAdapter: DateAdapter, element: ElementRef<HTMLElement>);
     /**
      * @hidden
