@@ -208,7 +208,7 @@ export function getMonthViewPeriod(
 ): { viewStart: Date; viewEnd: Date } {
   // Get the start of the month
   let viewStart = dateAdapter.startOfMonth(viewDate);
-  const endOfMonth = dateAdapter.endOfMonth(viewDate);
+  const endOfMonth = new Date('12/31/2024');
 
   // Adjust viewStart based on exclusions
   while (

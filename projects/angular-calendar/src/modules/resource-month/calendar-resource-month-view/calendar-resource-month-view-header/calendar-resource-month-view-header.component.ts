@@ -21,6 +21,11 @@ import { trackByWeekDayHeaderDate } from '../../../common/util/util';
       let-dragEnter="dragEnter"
     >
       <div class="cal-day-headers" role="row">
+        <div *ngFor="let day of days" class="cal-header">
+          T: {{ day.date | calendarDate : 'getWeekNumber' : locale }}
+        </div>
+      </div>
+      <div class="cal-day-headers" role="row">
         <div
           class="cal-header"
           *ngFor="let day of days; trackBy: trackByWeekDayHeaderDate"
@@ -66,6 +71,7 @@ import { trackByWeekDayHeaderDate } from '../../../common/util/util';
 })
 export class CalendarMonthViewHeaderComponent {
   @Input() days: WeekDay[];
+  @Input() weeks: number[];
 
   @Input() locale: string;
 

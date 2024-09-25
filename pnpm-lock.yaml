@@ -15,8 +15,8 @@ dependencies:
     specifier: ^7.0.0
     version: 7.0.0(@angular/core@15.0.3)
   calendar-utils:
-    specifier: github:jeandonaldroselin/calendar-utils#dist
-    version: github.com/jeandonaldroselin/calendar-utils/3f33b8e2550747e08c790dd3475cd9de06adedfe
+    specifier: github:juhas96/calendar-utils#dist
+    version: github.com/juhas96/calendar-utils/3f33b8e2550747e08c790dd3475cd9de06adedfe
   positioning:
     specifier: ^2.0.1
     version: 2.0.1
@@ -13534,9 +13534,10 @@ packages:
     dependencies:
       tslib: 2.4.1
 
-  github.com/jeandonaldroselin/calendar-utils/3f33b8e2550747e08c790dd3475cd9de06adedfe:
-    resolution: {tarball: https://codeload.github.com/jeandonaldroselin/calendar-utils/tar.gz/3f33b8e2550747e08c790dd3475cd9de06adedfe}
+  github.com/juhas96/calendar-utils/3f33b8e2550747e08c790dd3475cd9de06adedfe:
+    resolution: {tarball: https://codeload.github.com/juhas96/calendar-utils/tar.gz/3f33b8e2550747e08c790dd3475cd9de06adedfe}
     name: calendar-utils
     version: 0.10.4
+    prepare: true
     requiresBuild: true
     dev: false

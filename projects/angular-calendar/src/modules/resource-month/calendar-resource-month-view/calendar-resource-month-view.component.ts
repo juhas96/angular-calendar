@@ -57,9 +57,10 @@ export interface CalendarMonthViewBeforeRenderEvent extends ResourceWeekView {
 @Component({
   selector: 'mwl-calendar-resource-month-view',
   template: `
-    <div class="cal-resource-week-view" role="grid">
+    <div class="cal-resource-month-view" role="grid">
       <mwl-calendar-resource-month-view-header
         [days]="days"
+        [weeks]="weeks"
         [locale]="locale"
         [customTemplate]="headerTemplate"
         (dayHeaderClicked)="dayHeaderClicked.emit($event)"
@@ -463,6 +464,11 @@ export class CalendarMonthViewComponent
   /**
    * @hidden
    */
+  weeks: number[] = [];
+
+  /**
+   * @hidden
+   */
   constructor(
     protected cdr: ChangeDetectorRef,
     protected utils: CalendarUtils,
@@ -511,6 +517,7 @@ export class CalendarMonthViewComponent
       changes.excludeDays ||
       changes.weekendDays ||
       changes.daysInWeek ||
+      changes.weeks ||
       changes.weekStartsOn;
 
     const refreshBody =
@@ -593,6 +600,11 @@ export class CalendarMonthViewComponent
       weekendDays: this.weekendDays,
       ...getMonthViewPeriod(this.dateAdapter, this.viewDate, this.excludeDays),
     });
+    this.weeks = [
+      ...new Set(
+        this.days.map((day) => this.dateAdapter.getISOWeek(day.date))
+      ).values(),
+    ];
   }
 
   protected refreshBody(): void {

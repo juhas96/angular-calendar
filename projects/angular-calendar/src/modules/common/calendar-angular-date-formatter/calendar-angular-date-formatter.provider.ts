@@ -20,7 +20,14 @@ export class CalendarAngularDateFormatter
    * The month view header week day labels
    */
   public monthViewColumnHeader({ date, locale }: DateFormatterParams): string {
-    return formatDate(date, 'EE', locale);
+    return formatDate(date, 'EEEEE', locale);
+  }
+
+  /**
+   * The number of week for date
+   */
+  public getWeekNumber({ date }: DateFormatterParams): number {
+    return this.dateAdapter.getISOWeek(date);
   }
 
   /**
