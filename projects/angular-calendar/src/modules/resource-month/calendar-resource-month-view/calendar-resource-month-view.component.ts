@@ -12,6 +12,7 @@ import {
   TemplateRef,
   ElementRef,
   AfterViewInit,
+  ViewChild,
 } from '@angular/core';
 import { Subject, Subscription } from 'rxjs';
 import {
@@ -39,6 +40,7 @@ import {
 } from '../../common/util/util';
 import { DateAdapter } from '../../../date-adapters/date-adapter';
 import { PlacementArray } from 'positioning';
+import { CalendarMonthViewHeaderComponent } from './calendar-resource-month-view-header/calendar-resource-month-view-header.component';
 
 export interface CalendarMonthViewBeforeRenderEvent extends ResourceWeekView {
   header: WeekDay[];
@@ -93,7 +95,7 @@ export interface CalendarMonthViewBeforeRenderEvent extends ResourceWeekView {
             </mwl-calendar-resource-month-view-row-segment>
           </div>
         </div>
-        <div class="cal-day-columns" #dayColumns>
+        <div (scroll)="onScroll($event)" class="cal-day-columns" #dayColumns>
           <div
             class="cal-day-column"
             *ngFor="let column of view.rowColumns; trackBy: trackByRowColumn"
@@ -391,6 +393,9 @@ export class CalendarMonthViewComponent
     sourceEvent: MouseEvent;
   }>();
 
+  @ViewChild(CalendarMonthViewHeaderComponent)
+  headers: CalendarMonthViewHeaderComponent;
+
   /**
    * @hidden
    */
@@ -609,6 +614,7 @@ export class CalendarMonthViewComponent
 
   protected refreshBody(): void {
     this.view = this.getResourceWeekView(this.events, this.resources);
+    console.log(this.view);
   }
 
   protected refreshAll(): void {
@@ -659,5 +665,10 @@ export class CalendarMonthViewComponent
         resourceWeekView.resourcesMaxRowsNumber
       );
     return resourceWeekView;
+  }
+
+  onScroll($event: Event) {
+    console.log($event.target['scrollLeft']);
+    this.headers.scrollElements($event.target['scrollLeft']);
   }
 }

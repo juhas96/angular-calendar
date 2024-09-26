@@ -31,8 +31,7 @@ import { PlacementArray } from 'positioning';
         class="cal-event"
         [ngStyle]="{
           color: weekEvent.event.color?.secondaryText,
-          backgroundColor: weekEvent.event.color?.secondary,
-          borderColor: weekEvent.event.color?.primary
+          backgroundColor: weekEvent.event.color?.secondary
         }"
         [mwlCalendarTooltip]="
           !tooltipDisabled
