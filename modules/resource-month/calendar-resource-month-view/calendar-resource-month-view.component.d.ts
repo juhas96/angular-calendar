@@ -4,6 +4,7 @@ import { WeekDay, CalendarEvent, CalendarResource, WeekViewHourColumn, WeekViewA
 import { CalendarUtils } from '../../common/calendar-utils/calendar-utils.provider';
 import { DateAdapter } from '../../../date-adapters/date-adapter';
 import { PlacementArray } from 'positioning';
+import { CalendarMonthViewHeaderComponent } from './calendar-resource-month-view-header/calendar-resource-month-view-header.component';
 import * as i0 from "@angular/core";
 export interface CalendarMonthViewBeforeRenderEvent extends ResourceWeekView {
     header: WeekDay[];
@@ -188,6 +189,7 @@ export declare class CalendarMonthViewComponent implements OnChanges, OnInit, On
         date: Date;
         sourceEvent: MouseEvent;
     }>;
+    headers: CalendarMonthViewHeaderComponent;
     /**
      * @hidden
      */
@@ -293,6 +295,7 @@ export declare class CalendarMonthViewComponent implements OnChanges, OnInit, On
     protected refreshAll(): void;
     protected emitBeforeViewRender(): void;
     protected getResourceWeekView(events: CalendarEvent[], resources: CalendarResource[]): ResourceWeekView<any, any>;
+    onScroll($event: Event): void;
     static ɵfac: i0.ɵɵFactoryDeclaration<CalendarMonthViewComponent, never>;
     static ɵcmp: i0.ɵɵComponentDeclaration<CalendarMonthViewComponent, "mwl-calendar-resource-month-view", never, { "viewDate": "viewDate"; "events": "events"; "resources": "resources"; "excludeDays": "excludeDays"; "refresh": "refresh"; "locale": "locale"; "tooltipPlacement": "tooltipPlacement"; "tooltipTemplate": "tooltipTemplate"; "tooltipAppendToBody": "tooltipAppendToBody"; "tooltipDelay": "tooltipDelay"; "weekStartsOn": "weekStartsOn"; "headerTemplate": "headerTemplate"; "eventTemplate": "eventTemplate"; "eventTitleTemplate": "eventTitleTemplate"; "eventActionsTemplate": "eventActionsTemplate"; "precision": "precision"; "weekendDays": "weekendDays"; "hourSegments": "hourSegments"; "hourDuration": "hourDuration"; "hourSegmentHeight": "hourSegmentHeight"; "minimumEventHeight": "minimumEventHeight"; "dayStartHour": "dayStartHour"; "dayStartMinute": "dayStartMinute"; "dayEndHour": "dayEndHour"; "dayEndMinute": "dayEndMinute"; "hourSegmentTemplate": "hourSegmentTemplate"; "allDayEventsLabelTemplate": "allDayEventsLabelTemplate"; "daysInWeek": "daysInWeek"; "currentTimeMarkerTemplate": "currentTimeMarkerTemplate"; "keepUnassignedEvents": "keepUnassignedEvents"; "unassignedRessourceName": "unassignedRessourceName"; }, { "dayHeaderClicked": "dayHeaderClicked"; "eventClicked": "eventClicked"; "beforeViewRender": "beforeViewRender"; "hourSegmentClicked": "hourSegmentClicked"; }, never, never, false, never>;
 }

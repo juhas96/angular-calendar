@@ -1,5 +1,5 @@
 import * as i0 from '@angular/core';
-import { EventEmitter, Directive, Inject, Input, Output, Injectable, LOCALE_ID, Pipe, Component, HostListener, InjectionToken, NgModule } from '@angular/core';
+import { EventEmitter, Directive, Inject, Input, Output, Injectable, LOCALE_ID, Pipe, Component, HostListener, InjectionToken, NgModule, ViewChildren, ViewChild } from '@angular/core';
 import * as i1 from '@angular/common';
 import { DOCUMENT, formatDate, CommonModule, I18nPluralPipe } from '@angular/common';
 import { Subject, Observable, of, timer, BehaviorSubject, interval } from 'rxjs';
@@ -6245,9 +6245,12 @@ class CalendarMonthViewHeaderComponent {
         this.dragEnter = new EventEmitter();
         this.trackByWeekDayHeaderDate = trackByWeekDayHeaderDate;
     }
+    scrollElements(scrollLeft) {
+        this.headers.forEach((header) => (header.nativeElement.scrollLeft = scrollLeft));
+    }
 }
 CalendarMonthViewHeaderComponent.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "15.0.3", ngImport: i0, type: CalendarMonthViewHeaderComponent, deps: [], target: i0.ɵɵFactoryTarget.Component });
-CalendarMonthViewHeaderComponent.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "15.0.3", type: CalendarMonthViewHeaderComponent, selector: "mwl-calendar-resource-month-view-header", inputs: { days: "days", weeks: "weeks", locale: "locale", customTemplate: "customTemplate" }, outputs: { dayHeaderClicked: "dayHeaderClicked", eventDropped: "eventDropped", dragEnter: "dragEnter" }, ngImport: i0, template: `
+CalendarMonthViewHeaderComponent.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "15.0.3", type: CalendarMonthViewHeaderComponent, selector: "mwl-calendar-resource-month-view-header", inputs: { days: "days", weeks: "weeks", locale: "locale", customTemplate: "customTemplate" }, outputs: { dayHeaderClicked: "dayHeaderClicked", eventDropped: "eventDropped", dragEnter: "dragEnter" }, viewQueries: [{ propertyName: "headers", predicate: ["scrollContainer"], descendants: true }], ngImport: i0, template: `
     <ng-template
       #defaultTemplate
       let-days="days"
@@ -6257,38 +6260,48 @@ CalendarMonthViewHeaderComponent.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion:
       let-trackByWeekDayHeaderDate="trackByWeekDayHeaderDate"
       let-dragEnter="dragEnter"
     >
-      <div class="cal-day-headers" role="row">
-        <div *ngFor="let day of days" class="cal-header">
-          T: {{ day.date | calendarDate : 'getWeekNumber' : locale }}
+      <div #header class="cal-day-headers" role="row">
+        <div class="cal-header" style="min-width: 120px; border-right: 0"></div>
+        <div #scrollContainer class="cal-header-scrollable-container">
+          <div *ngFor="let day of days" class="cal-header">
+            T: {{ day.date | calendarDate : 'getWeekNumber' : locale }}
+          </div>
         </div>
       </div>
-      <div class="cal-day-headers" role="row">
-        <div
-          class="cal-header"
-          *ngFor="let day of days; trackBy: trackByWeekDayHeaderDate"
-          [class.cal-past]="day.isPast"
-          [class.cal-today]="day.isToday"
-          [class.cal-future]="day.isFuture"
-          [class.cal-weekend]="day.isWeekend"
-          [ngClass]="day.cssClass"
-          (mwlClick)="dayHeaderClicked.emit({ day: day, sourceEvent: $event })"
-          mwlDroppable
-          dragOverClass="cal-drag-over"
-          (drop)="
-            eventDropped.emit({
-              event: $event.dropData.event,
-              newStart: day.date
-            })
-          "
-          (dragEnter)="dragEnter.emit({ date: day.date })"
-          tabindex="0"
-          role="columnheader"
-        >
-          <b>{{ day.date | calendarDate : 'monthViewColumnHeader' : locale }}</b
-          ><br />
-          <span>{{
-            day.date | calendarDate : 'monthViewDayNumber' : locale
-          }}</span>
+      <div #header class="cal-day-headers" role="row">
+        <div class="cal-header" style="min-width: 120px; border-right: 0"></div>
+        <div #scrollContainer class="cal-header-scrollable-container">
+          <div
+            class="cal-header"
+            *ngFor="let day of days; trackBy: trackByWeekDayHeaderDate"
+            [class.cal-past]="day.isPast"
+            [class.cal-today]="day.isToday"
+            [class.cal-future]="day.isFuture"
+            [class.cal-weekend]="day.isWeekend"
+            [ngClass]="day.cssClass"
+            (mwlClick)="
+              dayHeaderClicked.emit({ day: day, sourceEvent: $event })
+            "
+            mwlDroppable
+            dragOverClass="cal-drag-over"
+            (drop)="
+              eventDropped.emit({
+                event: $event.dropData.event,
+                newStart: day.date
+              })
+            "
+            (dragEnter)="dragEnter.emit({ date: day.date })"
+            tabindex="0"
+            role="columnheader"
+          >
+            <b>{{
+              day.date | calendarDate : 'monthViewColumnHeader' : locale
+            }}</b
+            ><br />
+            <span>{{
+              day.date | calendarDate : 'monthViewDayNumber' : locale
+            }}</span>
+          </div>
         </div>
       </div>
     </ng-template>
@@ -6319,38 +6332,48 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "15.0.3", ngImpor
       let-trackByWeekDayHeaderDate="trackByWeekDayHeaderDate"
       let-dragEnter="dragEnter"
     >
-      <div class="cal-day-headers" role="row">
-        <div *ngFor="let day of days" class="cal-header">
-          T: {{ day.date | calendarDate : 'getWeekNumber' : locale }}
+      <div #header class="cal-day-headers" role="row">
+        <div class="cal-header" style="min-width: 120px; border-right: 0"></div>
+        <div #scrollContainer class="cal-header-scrollable-container">
+          <div *ngFor="let day of days" class="cal-header">
+            T: {{ day.date | calendarDate : 'getWeekNumber' : locale }}
+          </div>
         </div>
       </div>
-      <div class="cal-day-headers" role="row">
-        <div
-          class="cal-header"
-          *ngFor="let day of days; trackBy: trackByWeekDayHeaderDate"
-          [class.cal-past]="day.isPast"
-          [class.cal-today]="day.isToday"
-          [class.cal-future]="day.isFuture"
-          [class.cal-weekend]="day.isWeekend"
-          [ngClass]="day.cssClass"
-          (mwlClick)="dayHeaderClicked.emit({ day: day, sourceEvent: $event })"
-          mwlDroppable
-          dragOverClass="cal-drag-over"
-          (drop)="
-            eventDropped.emit({
-              event: $event.dropData.event,
-              newStart: day.date
-            })
-          "
-          (dragEnter)="dragEnter.emit({ date: day.date })"
-          tabindex="0"
-          role="columnheader"
-        >
-          <b>{{ day.date | calendarDate : 'monthViewColumnHeader' : locale }}</b
-          ><br />
-          <span>{{
-            day.date | calendarDate : 'monthViewDayNumber' : locale
-          }}</span>
+      <div #header class="cal-day-headers" role="row">
+        <div class="cal-header" style="min-width: 120px; border-right: 0"></div>
+        <div #scrollContainer class="cal-header-scrollable-container">
+          <div
+            class="cal-header"
+            *ngFor="let day of days; trackBy: trackByWeekDayHeaderDate"
+            [class.cal-past]="day.isPast"
+            [class.cal-today]="day.isToday"
+            [class.cal-future]="day.isFuture"
+            [class.cal-weekend]="day.isWeekend"
+            [ngClass]="day.cssClass"
+            (mwlClick)="
+              dayHeaderClicked.emit({ day: day, sourceEvent: $event })
+            "
+            mwlDroppable
+            dragOverClass="cal-drag-over"
+            (drop)="
+              eventDropped.emit({
+                event: $event.dropData.event,
+                newStart: day.date
+              })
+            "
+            (dragEnter)="dragEnter.emit({ date: day.date })"
+            tabindex="0"
+            role="columnheader"
+          >
+            <b>{{
+              day.date | calendarDate : 'monthViewColumnHeader' : locale
+            }}</b
+            ><br />
+            <span>{{
+              day.date | calendarDate : 'monthViewDayNumber' : locale
+            }}</span>
+          </div>
         </div>
       </div>
     </ng-template>
@@ -6382,6 +6405,9 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "15.0.3", ngImpor
                 type: Output
             }], dragEnter: [{
                 type: Output
+            }], headers: [{
+                type: ViewChildren,
+                args: ['scrollContainer']
             }] } });
 
 class CalendarMonthViewEventComponent {
@@ -6407,8 +6433,7 @@ CalendarMonthViewEventComponent.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: 
         class="cal-event"
         [ngStyle]="{
           color: weekEvent.event.color?.secondaryText,
-          backgroundColor: weekEvent.event.color?.secondary,
-          borderColor: weekEvent.event.color?.primary
+          backgroundColor: weekEvent.event.color?.secondary
         }"
         [mwlCalendarTooltip]="
           !tooltipDisabled
@@ -6483,8 +6508,7 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "15.0.3", ngImpor
         class="cal-event"
         [ngStyle]="{
           color: weekEvent.event.color?.secondaryText,
-          backgroundColor: weekEvent.event.color?.secondary,
-          borderColor: weekEvent.event.color?.primary
+          backgroundColor: weekEvent.event.color?.secondary
         }"
         [mwlCalendarTooltip]="
           !tooltipDisabled
@@ -6907,6 +6931,7 @@ class CalendarMonthViewComponent {
     }
     refreshBody() {
         this.view = this.getResourceWeekView(this.events, this.resources);
+        console.log(this.view);
     }
     refreshAll() {
         this.refreshHeader();
@@ -6950,9 +6975,13 @@ class CalendarMonthViewComponent {
             this.getResourceArrayFromResourceMaxRowNumber(resourceWeekView.resourcesMaxRowsNumber);
         return resourceWeekView;
     }
+    onScroll($event) {
+        console.log($event.target['scrollLeft']);
+        this.headers.scrollElements($event.target['scrollLeft']);
+    }
 }
 CalendarMonthViewComponent.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "15.0.3", ngImport: i0, type: CalendarMonthViewComponent, deps: [{ token: i0.ChangeDetectorRef }, { token: CalendarUtils }, { token: LOCALE_ID }, { token: DateAdapter }, { token: i0.ElementRef }], target: i0.ɵɵFactoryTarget.Component });
-CalendarMonthViewComponent.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "15.0.3", type: CalendarMonthViewComponent, selector: "mwl-calendar-resource-month-view", inputs: { viewDate: "viewDate", events: "events", resources: "resources", excludeDays: "excludeDays", refresh: "refresh", locale: "locale", tooltipPlacement: "tooltipPlacement", tooltipTemplate: "tooltipTemplate", tooltipAppendToBody: "tooltipAppendToBody", tooltipDelay: "tooltipDelay", weekStartsOn: "weekStartsOn", headerTemplate: "headerTemplate", eventTemplate: "eventTemplate", eventTitleTemplate: "eventTitleTemplate", eventActionsTemplate: "eventActionsTemplate", precision: "precision", weekendDays: "weekendDays", hourSegments: "hourSegments", hourDuration: "hourDuration", hourSegmentHeight: "hourSegmentHeight", minimumEventHeight: "minimumEventHeight", dayStartHour: "dayStartHour", dayStartMinute: "dayStartMinute", dayEndHour: "dayEndHour", dayEndMinute: "dayEndMinute", hourSegmentTemplate: "hourSegmentTemplate", allDayEventsLabelTemplate: "allDayEventsLabelTemplate", daysInWeek: "daysInWeek", currentTimeMarkerTemplate: "currentTimeMarkerTemplate", keepUnassignedEvents: "keepUnassignedEvents", unassignedRessourceName: "unassignedRessourceName" }, outputs: { dayHeaderClicked: "dayHeaderClicked", eventClicked: "eventClicked", beforeViewRender: "beforeViewRender", hourSegmentClicked: "hourSegmentClicked" }, usesOnChanges: true, ngImport: i0, template: `
+CalendarMonthViewComponent.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "15.0.3", type: CalendarMonthViewComponent, selector: "mwl-calendar-resource-month-view", inputs: { viewDate: "viewDate", events: "events", resources: "resources", excludeDays: "excludeDays", refresh: "refresh", locale: "locale", tooltipPlacement: "tooltipPlacement", tooltipTemplate: "tooltipTemplate", tooltipAppendToBody: "tooltipAppendToBody", tooltipDelay: "tooltipDelay", weekStartsOn: "weekStartsOn", headerTemplate: "headerTemplate", eventTemplate: "eventTemplate", eventTitleTemplate: "eventTitleTemplate", eventActionsTemplate: "eventActionsTemplate", precision: "precision", weekendDays: "weekendDays", hourSegments: "hourSegments", hourDuration: "hourDuration", hourSegmentHeight: "hourSegmentHeight", minimumEventHeight: "minimumEventHeight", dayStartHour: "dayStartHour", dayStartMinute: "dayStartMinute", dayEndHour: "dayEndHour", dayEndMinute: "dayEndMinute", hourSegmentTemplate: "hourSegmentTemplate", allDayEventsLabelTemplate: "allDayEventsLabelTemplate", daysInWeek: "daysInWeek", currentTimeMarkerTemplate: "currentTimeMarkerTemplate", keepUnassignedEvents: "keepUnassignedEvents", unassignedRessourceName: "unassignedRessourceName" }, outputs: { dayHeaderClicked: "dayHeaderClicked", eventClicked: "eventClicked", beforeViewRender: "beforeViewRender", hourSegmentClicked: "hourSegmentClicked" }, viewQueries: [{ propertyName: "headers", first: true, predicate: CalendarMonthViewHeaderComponent, descendants: true }], usesOnChanges: true, ngImport: i0, template: `
     <div class="cal-resource-month-view" role="grid">
       <mwl-calendar-resource-month-view-header
         [days]="days"
@@ -6989,7 +7018,7 @@ CalendarMonthViewComponent.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0
             </mwl-calendar-resource-month-view-row-segment>
           </div>
         </div>
-        <div class="cal-day-columns" #dayColumns>
+        <div (scroll)="onScroll($event)" class="cal-day-columns" #dayColumns>
           <div
             class="cal-day-column"
             *ngFor="let column of view.rowColumns; trackBy: trackByRowColumn"
@@ -7123,7 +7152,7 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "15.0.3", ngImpor
             </mwl-calendar-resource-month-view-row-segment>
           </div>
         </div>
-        <div class="cal-day-columns" #dayColumns>
+        <div (scroll)="onScroll($event)" class="cal-day-columns" #dayColumns>
           <div
             class="cal-day-column"
             *ngFor="let column of view.rowColumns; trackBy: trackByRowColumn"
@@ -7290,6 +7319,9 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "15.0.3", ngImpor
                 type: Output
             }], hourSegmentClicked: [{
                 type: Output
+            }], headers: [{
+                type: ViewChild,
+                args: [CalendarMonthViewHeaderComponent]
             }] } });
 
 class CalendarMonthViewCurrentTimeMarkerComponent {

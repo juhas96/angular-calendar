@@ -1,4 +1,4 @@
-import { EventEmitter, TemplateRef } from '@angular/core';
+import { EventEmitter, TemplateRef, ElementRef, QueryList } from '@angular/core';
 import { CalendarEvent, WeekDay } from 'calendar-utils';
 import * as i0 from "@angular/core";
 export declare class CalendarMonthViewHeaderComponent {
@@ -17,7 +17,9 @@ export declare class CalendarMonthViewHeaderComponent {
     dragEnter: EventEmitter<{
         date: Date;
     }>;
+    headers: QueryList<ElementRef<HTMLDivElement>>;
     trackByWeekDayHeaderDate: (index: number, day: WeekDay) => string;
+    scrollElements(scrollLeft: number): void;
     static ɵfac: i0.ɵɵFactoryDeclaration<CalendarMonthViewHeaderComponent, never>;
     static ɵcmp: i0.ɵɵComponentDeclaration<CalendarMonthViewHeaderComponent, "mwl-calendar-resource-month-view-header", never, { "days": "days"; "weeks": "weeks"; "locale": "locale"; "customTemplate": "customTemplate"; }, { "dayHeaderClicked": "dayHeaderClicked"; "eventDropped": "eventDropped"; "dragEnter": "dragEnter"; }, never, never, false, never>;
 }

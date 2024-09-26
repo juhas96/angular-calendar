@@ -7,8 +7,7 @@ $cal-week-view-vars: map.merge($cal-vars, $cal-week-view-vars);
 @mixin cal-week-view-theme($overrides) {
   $theme: map.merge($cal-week-view-vars, $overrides);
 
-  .cal-resource-week-view,
-  .cal-resource-month-view {
+  .cal-resource-week-view {
     background-color: map.get($theme, bg-primary);
     border-top: solid 1px map.get($theme, border-color);
 
@@ -112,12 +111,7 @@ $cal-week-view-vars: map.merge($cal-vars, $cal-week-view-vars);
   }
 }
 
-.cal-resource-month-view {
-  overflow-x: scroll;
-}
-
-.cal-resource-week-view,
-.cal-resource-month-view {
+.cal-resource-week-view {
   * {
     box-sizing: border-box;
   }

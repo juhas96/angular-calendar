@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, } from '@angular/core';
+import { Component, Input, Output, EventEmitter, ViewChildren, } from '@angular/core';
 import { trackByWeekDayHeaderDate } from '../../../common/util/util';
 import * as i0 from "@angular/core";
 import * as i1 from "@angular/common";
@@ -12,9 +12,12 @@ export class CalendarMonthViewHeaderComponent {
         this.dragEnter = new EventEmitter();
         this.trackByWeekDayHeaderDate = trackByWeekDayHeaderDate;
     }
+    scrollElements(scrollLeft) {
+        this.headers.forEach((header) => (header.nativeElement.scrollLeft = scrollLeft));
+    }
 }
 CalendarMonthViewHeaderComponent.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "15.0.3", ngImport: i0, type: CalendarMonthViewHeaderComponent, deps: [], target: i0.ɵɵFactoryTarget.Component });
-CalendarMonthViewHeaderComponent.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "15.0.3", type: CalendarMonthViewHeaderComponent, selector: "mwl-calendar-resource-month-view-header", inputs: { days: "days", weeks: "weeks", locale: "locale", customTemplate: "customTemplate" }, outputs: { dayHeaderClicked: "dayHeaderClicked", eventDropped: "eventDropped", dragEnter: "dragEnter" }, ngImport: i0, template: `
+CalendarMonthViewHeaderComponent.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "15.0.3", type: CalendarMonthViewHeaderComponent, selector: "mwl-calendar-resource-month-view-header", inputs: { days: "days", weeks: "weeks", locale: "locale", customTemplate: "customTemplate" }, outputs: { dayHeaderClicked: "dayHeaderClicked", eventDropped: "eventDropped", dragEnter: "dragEnter" }, viewQueries: [{ propertyName: "headers", predicate: ["scrollContainer"], descendants: true }], ngImport: i0, template: `
     <ng-template
       #defaultTemplate
       let-days="days"
@@ -24,38 +27,48 @@ CalendarMonthViewHeaderComponent.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion:
       let-trackByWeekDayHeaderDate="trackByWeekDayHeaderDate"
       let-dragEnter="dragEnter"
     >
-      <div class="cal-day-headers" role="row">
-        <div *ngFor="let day of days" class="cal-header">
-          T: {{ day.date | calendarDate : 'getWeekNumber' : locale }}
+      <div #header class="cal-day-headers" role="row">
+        <div class="cal-header" style="min-width: 120px; border-right: 0"></div>
+        <div #scrollContainer class="cal-header-scrollable-container">
+          <div *ngFor="let day of days" class="cal-header">
+            T: {{ day.date | calendarDate : 'getWeekNumber' : locale }}
+          </div>
         </div>
       </div>
-      <div class="cal-day-headers" role="row">
-        <div
-          class="cal-header"
-          *ngFor="let day of days; trackBy: trackByWeekDayHeaderDate"
-          [class.cal-past]="day.isPast"
-          [class.cal-today]="day.isToday"
-          [class.cal-future]="day.isFuture"
-          [class.cal-weekend]="day.isWeekend"
-          [ngClass]="day.cssClass"
-          (mwlClick)="dayHeaderClicked.emit({ day: day, sourceEvent: $event })"
-          mwlDroppable
-          dragOverClass="cal-drag-over"
-          (drop)="
-            eventDropped.emit({
-              event: $event.dropData.event,
-              newStart: day.date
-            })
-          "
-          (dragEnter)="dragEnter.emit({ date: day.date })"
-          tabindex="0"
-          role="columnheader"
-        >
-          <b>{{ day.date | calendarDate : 'monthViewColumnHeader' : locale }}</b
-          ><br />
-          <span>{{
-            day.date | calendarDate : 'monthViewDayNumber' : locale
-          }}</span>
+      <div #header class="cal-day-headers" role="row">
+        <div class="cal-header" style="min-width: 120px; border-right: 0"></div>
+        <div #scrollContainer class="cal-header-scrollable-container">
+          <div
+            class="cal-header"
+            *ngFor="let day of days; trackBy: trackByWeekDayHeaderDate"
+            [class.cal-past]="day.isPast"
+            [class.cal-today]="day.isToday"
+            [class.cal-future]="day.isFuture"
+            [class.cal-weekend]="day.isWeekend"
+            [ngClass]="day.cssClass"
+            (mwlClick)="
+              dayHeaderClicked.emit({ day: day, sourceEvent: $event })
+            "
+            mwlDroppable
+            dragOverClass="cal-drag-over"
+            (drop)="
+              eventDropped.emit({
+                event: $event.dropData.event,
+                newStart: day.date
+              })
+            "
+            (dragEnter)="dragEnter.emit({ date: day.date })"
+            tabindex="0"
+            role="columnheader"
+          >
+            <b>{{
+              day.date | calendarDate : 'monthViewColumnHeader' : locale
+            }}</b
+            ><br />
+            <span>{{
+              day.date | calendarDate : 'monthViewDayNumber' : locale
+            }}</span>
+          </div>
         </div>
       </div>
     </ng-template>
@@ -86,38 +99,48 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "15.0.3", ngImpor
       let-trackByWeekDayHeaderDate="trackByWeekDayHeaderDate"
       let-dragEnter="dragEnter"
     >
-      <div class="cal-day-headers" role="row">
-        <div *ngFor="let day of days" class="cal-header">
-          T: {{ day.date | calendarDate : 'getWeekNumber' : locale }}
+      <div #header class="cal-day-headers" role="row">
+        <div class="cal-header" style="min-width: 120px; border-right: 0"></div>
+        <div #scrollContainer class="cal-header-scrollable-container">
+          <div *ngFor="let day of days" class="cal-header">
+            T: {{ day.date | calendarDate : 'getWeekNumber' : locale }}
+          </div>
         </div>
       </div>
-      <div class="cal-day-headers" role="row">
-        <div
-          class="cal-header"
-          *ngFor="let day of days; trackBy: trackByWeekDayHeaderDate"
-          [class.cal-past]="day.isPast"
-          [class.cal-today]="day.isToday"
-          [class.cal-future]="day.isFuture"
-          [class.cal-weekend]="day.isWeekend"
-          [ngClass]="day.cssClass"
-          (mwlClick)="dayHeaderClicked.emit({ day: day, sourceEvent: $event })"
-          mwlDroppable
-          dragOverClass="cal-drag-over"
-          (drop)="
-            eventDropped.emit({
-              event: $event.dropData.event,
-              newStart: day.date
-            })
-          "
-          (dragEnter)="dragEnter.emit({ date: day.date })"
-          tabindex="0"
-          role="columnheader"
-        >
-          <b>{{ day.date | calendarDate : 'monthViewColumnHeader' : locale }}</b
-          ><br />
-          <span>{{
-            day.date | calendarDate : 'monthViewDayNumber' : locale
-          }}</span>
+      <div #header class="cal-day-headers" role="row">
+        <div class="cal-header" style="min-width: 120px; border-right: 0"></div>
+        <div #scrollContainer class="cal-header-scrollable-container">
+          <div
+            class="cal-header"
+            *ngFor="let day of days; trackBy: trackByWeekDayHeaderDate"
+            [class.cal-past]="day.isPast"
+            [class.cal-today]="day.isToday"
+            [class.cal-future]="day.isFuture"
+            [class.cal-weekend]="day.isWeekend"
+            [ngClass]="day.cssClass"
+            (mwlClick)="
+              dayHeaderClicked.emit({ day: day, sourceEvent: $event })
+            "
+            mwlDroppable
+            dragOverClass="cal-drag-over"
+            (drop)="
+              eventDropped.emit({
+                event: $event.dropData.event,
+                newStart: day.date
+              })
+            "
+            (dragEnter)="dragEnter.emit({ date: day.date })"
+            tabindex="0"
+            role="columnheader"
+          >
+            <b>{{
+              day.date | calendarDate : 'monthViewColumnHeader' : locale
+            }}</b
+            ><br />
+            <span>{{
+              day.date | calendarDate : 'monthViewDayNumber' : locale
+            }}</span>
+          </div>
         </div>
       </div>
     </ng-template>
@@ -149,5 +172,8 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "15.0.3", ngImpor
                 type: Output
             }], dragEnter: [{
                 type: Output
+            }], headers: [{
+                type: ViewChildren,
+                args: ['scrollContainer']
             }] } });
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiY2FsZW5kYXItcmVzb3VyY2UtbW9udGgtdmlldy1oZWFkZXIuY29tcG9uZW50LmpzIiwic291cmNlUm9vdCI6IiIsInNvdXJjZXMiOlsiLi4vLi4vLi4vLi4vLi4vLi4vLi4vcHJvamVjdHMvYW5ndWxhci1jYWxlbmRhci9zcmMvbW9kdWxlcy9yZXNvdXJjZS1tb250aC9jYWxlbmRhci1yZXNvdXJjZS1tb250aC12aWV3L2NhbGVuZGFyLXJlc291cmNlLW1vbnRoLXZpZXctaGVhZGVyL2NhbGVuZGFyLXJlc291cmNlLW1vbnRoLXZpZXctaGVhZGVyLmNvbXBvbmVudC50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQSxPQUFPLEVBQ0wsU0FBUyxFQUNULEtBQUssRUFDTCxNQUFNLEVBQ04sWUFBWSxHQUViLE1BQU0sZUFBZSxDQUFDO0FBRXZCLE9BQU8sRUFBRSx3QkFBd0IsRUFBRSxNQUFNLDJCQUEyQixDQUFDOzs7Ozs7QUErRHJFLE1BQU0sT0FBTyxnQ0FBZ0M7SUE3RDdDO1FBcUVZLHFCQUFnQixHQUFHLElBQUksWUFBWSxFQUd6QyxDQUFDO1FBRUssaUJBQVksR0FBRyxJQUFJLFlBQVksRUFHckMsQ0FBQztRQUVLLGNBQVMsR0FBRyxJQUFJLFlBQVksRUFBa0IsQ0FBQztRQUV6RCw2QkFBd0IsR0FBRyx3QkFBd0IsQ0FBQztLQUNyRDs7NkhBckJZLGdDQUFnQztpSEFBaEMsZ0NBQWdDLHNSQTNEakM7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7OztHQXlEVDsyRkFFVSxnQ0FBZ0M7a0JBN0Q1QyxTQUFTO21CQUFDO29CQUNULFFBQVEsRUFBRSx5Q0FBeUM7b0JBQ25ELFFBQVEsRUFBRTs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7O0dBeURUO2lCQUNGOzhCQUVVLElBQUk7c0JBQVosS0FBSztnQkFDRyxLQUFLO3NCQUFiLEtBQUs7Z0JBRUcsTUFBTTtzQkFBZCxLQUFLO2dCQUVHLGNBQWM7c0JBQXRCLEtBQUs7Z0JBRUksZ0JBQWdCO3NCQUF6QixNQUFNO2dCQUtHLFlBQVk7c0JBQXJCLE1BQU07Z0JBS0csU0FBUztzQkFBbEIsTUFBTSIsInNvdXJjZXNDb250ZW50IjpbImltcG9ydCB7XG4gIENvbXBvbmVudCxcbiAgSW5wdXQsXG4gIE91dHB1dCxcbiAgRXZlbnRFbWl0dGVyLFxuICBUZW1wbGF0ZVJlZixcbn0gZnJvbSAnQGFuZ3VsYXIvY29yZSc7XG5pbXBvcnQgeyBDYWxlbmRhckV2ZW50LCBXZWVrRGF5IH0gZnJvbSAnY2FsZW5kYXItdXRpbHMnO1xuaW1wb3J0IHsgdHJhY2tCeVdlZWtEYXlIZWFkZXJEYXRlIH0gZnJvbSAnLi4vLi4vLi4vY29tbW9uL3V0aWwvdXRpbCc7XG5cbkBDb21wb25lbnQoe1xuICBzZWxlY3RvcjogJ213bC1jYWxlbmRhci1yZXNvdXJjZS1tb250aC12aWV3LWhlYWRlcicsXG4gIHRlbXBsYXRlOiBgXG4gICAgPG5nLXRlbXBsYXRlXG4gICAgICAjZGVmYXVsdFRlbXBsYXRlXG4gICAgICBsZXQtZGF5cz1cImRheXNcIlxuICAgICAgbGV0LWxvY2FsZT1cImxvY2FsZVwiXG4gICAgICBsZXQtZGF5SGVhZGVyQ2xpY2tlZD1cImRheUhlYWRlckNsaWNrZWRcIlxuICAgICAgbGV0LWV2ZW50RHJvcHBlZD1cImV2ZW50RHJvcHBlZFwiXG4gICAgICBsZXQtdHJhY2tCeVdlZWtEYXlIZWFkZXJEYXRlPVwidHJhY2tCeVdlZWtEYXlIZWFkZXJEYXRlXCJcbiAgICAgIGxldC1kcmFnRW50ZXI9XCJkcmFnRW50ZXJcIlxuICAgID5cbiAgICAgIDxkaXYgY2xhc3M9XCJjYWwtZGF5LWhlYWRlcnNcIiByb2xlPVwicm93XCI+XG4gICAgICAgIDxkaXYgKm5nRm9yPVwibGV0IGRheSBvZiBkYXlzXCIgY2xhc3M9XCJjYWwtaGVhZGVyXCI+XG4gICAgICAgICAgVDoge3sgZGF5LmRhdGUgfCBjYWxlbmRhckRhdGUgOiAnZ2V0V2Vla051bWJlcicgOiBsb2NhbGUgfX1cbiAgICAgICAgPC9kaXY+XG4gICAgICA8L2Rpdj5cbiAgICAgIDxkaXYgY2xhc3M9XCJjYWwtZGF5LWhlYWRlcnNcIiByb2xlPVwicm93XCI+XG4gICAgICAgIDxkaXZcbiAgICAgICAgICBjbGFzcz1cImNhbC1oZWFkZXJcIlxuICAgICAgICAgICpuZ0Zvcj1cImxldCBkYXkgb2YgZGF5czsgdHJhY2tCeTogdHJhY2tCeVdlZWtEYXlIZWFkZXJEYXRlXCJcbiAgICAgICAgICBbY2xhc3MuY2FsLXBhc3RdPVwiZGF5LmlzUGFzdFwiXG4gICAgICAgICAgW2NsYXNzLmNhbC10b2RheV09XCJkYXkuaXNUb2RheVwiXG4gICAgICAgICAgW2NsYXNzLmNhbC1mdXR1cmVdPVwiZGF5LmlzRnV0dXJlXCJcbiAgICAgICAgICBbY2xhc3MuY2FsLXdlZWtlbmRdPVwiZGF5LmlzV2Vla2VuZFwiXG4gICAgICAgICAgW25nQ2xhc3NdPVwiZGF5LmNzc0NsYXNzXCJcbiAgICAgICAgICAobXdsQ2xpY2spPVwiZGF5SGVhZGVyQ2xpY2tlZC5lbWl0KHsgZGF5OiBkYXksIHNvdXJjZUV2ZW50OiAkZXZlbnQgfSlcIlxuICAgICAgICAgIG13bERyb3BwYWJsZVxuICAgICAgICAgIGRyYWdPdmVyQ2xhc3M9XCJjYWwtZHJhZy1vdmVyXCJcbiAgICAgICAgICAoZHJvcCk9XCJcbiAgICAgICAgICAgIGV2ZW50RHJvcHBlZC5lbWl0KHtcbiAgICAgICAgICAgICAgZXZlbnQ6ICRldmVudC5kcm9wRGF0YS5ldmVudCxcbiAgICAgICAgICAgICAgbmV3U3RhcnQ6IGRheS5kYXRlXG4gICAgICAgICAgICB9KVxuICAgICAgICAgIFwiXG4gICAgICAgICAgKGRyYWdFbnRlcik9XCJkcmFnRW50ZXIuZW1pdCh7IGRhdGU6IGRheS5kYXRlIH0pXCJcbiAgICAgICAgICB0YWJpbmRleD1cIjBcIlxuICAgICAgICAgIHJvbGU9XCJjb2x1bW5oZWFkZXJcIlxuICAgICAgICA+XG4gICAgICAgICAgPGI+e3sgZGF5LmRhdGUgfCBjYWxlbmRhckRhdGUgOiAnbW9udGhWaWV3Q29sdW1uSGVhZGVyJyA6IGxvY2FsZSB9fTwvYlxuICAgICAgICAgID48YnIgLz5cbiAgICAgICAgICA8c3Bhbj57e1xuICAgICAgICAgICAgZGF5LmRhdGUgfCBjYWxlbmRhckRhdGUgOiAnbW9udGhWaWV3RGF5TnVtYmVyJyA6IGxvY2FsZVxuICAgICAgICAgIH19PC9zcGFuPlxuICAgICAgICA8L2Rpdj5cbiAgICAgIDwvZGl2PlxuICAgIDwvbmctdGVtcGxhdGU+XG4gICAgPG5nLXRlbXBsYXRlXG4gICAgICBbbmdUZW1wbGF0ZU91dGxldF09XCJjdXN0b21UZW1wbGF0ZSB8fCBkZWZhdWx0VGVtcGxhdGVcIlxuICAgICAgW25nVGVtcGxhdGVPdXRsZXRDb250ZXh0XT1cIntcbiAgICAgICAgZGF5czogZGF5cyxcbiAgICAgICAgbG9jYWxlOiBsb2NhbGUsXG4gICAgICAgIGRheUhlYWRlckNsaWNrZWQ6IGRheUhlYWRlckNsaWNrZWQsXG4gICAgICAgIGV2ZW50RHJvcHBlZDogZXZlbnREcm9wcGVkLFxuICAgICAgICBkcmFnRW50ZXI6IGRyYWdFbnRlcixcbiAgICAgICAgdHJhY2tCeVdlZWtEYXlIZWFkZXJEYXRlOiB0cmFja0J5V2Vla0RheUhlYWRlckRhdGVcbiAgICAgIH1cIlxuICAgID5cbiAgICA8L25nLXRlbXBsYXRlPlxuICBgLFxufSlcbmV4cG9ydCBjbGFzcyBDYWxlbmRhck1vbnRoVmlld0hlYWRlckNvbXBvbmVudCB7XG4gIEBJbnB1dCgpIGRheXM6IFdlZWtEYXlbXTtcbiAgQElucHV0KCkgd2Vla3M6IG51bWJlcltdO1xuXG4gIEBJbnB1dCgpIGxvY2FsZTogc3RyaW5nO1xuXG4gIEBJbnB1dCgpIGN1c3RvbVRlbXBsYXRlOiBUZW1wbGF0ZVJlZjxhbnk+O1xuXG4gIEBPdXRwdXQoKSBkYXlIZWFkZXJDbGlja2VkID0gbmV3IEV2ZW50RW1pdHRlcjx7XG4gICAgZGF5OiBXZWVrRGF5O1xuICAgIHNvdXJjZUV2ZW50OiBNb3VzZUV2ZW50O1xuICB9PigpO1xuXG4gIEBPdXRwdXQoKSBldmVudERyb3BwZWQgPSBuZXcgRXZlbnRFbWl0dGVyPHtcbiAgICBldmVudDogQ2FsZW5kYXJFdmVudDtcbiAgICBuZXdTdGFydDogRGF0ZTtcbiAgfT4oKTtcblxuICBAT3V0cHV0KCkgZHJhZ0VudGVyID0gbmV3IEV2ZW50RW1pdHRlcjx7IGRhdGU6IERhdGUgfT4oKTtcblxuICB0cmFja0J5V2Vla0RheUhlYWRlckRhdGUgPSB0cmFja0J5V2Vla0RheUhlYWRlckRhdGU7XG59XG4iXX0=
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiY2FsZW5kYXItcmVzb3VyY2UtbW9udGgtdmlldy1oZWFkZXIuY29tcG9uZW50LmpzIiwic291cmNlUm9vdCI6IiIsInNvdXJjZXMiOlsiLi4vLi4vLi4vLi4vLi4vLi4vLi4vcHJvamVjdHMvYW5ndWxhci1jYWxlbmRhci9zcmMvbW9kdWxlcy9yZXNvdXJjZS1tb250aC9jYWxlbmRhci1yZXNvdXJjZS1tb250aC12aWV3L2NhbGVuZGFyLXJlc291cmNlLW1vbnRoLXZpZXctaGVhZGVyL2NhbGVuZGFyLXJlc291cmNlLW1vbnRoLXZpZXctaGVhZGVyLmNvbXBvbmVudC50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQSxPQUFPLEVBQ0wsU0FBUyxFQUNULEtBQUssRUFDTCxNQUFNLEVBQ04sWUFBWSxFQUVaLFlBQVksR0FHYixNQUFNLGVBQWUsQ0FBQztBQUV2QixPQUFPLEVBQUUsd0JBQXdCLEVBQUUsTUFBTSwyQkFBMkIsQ0FBQzs7Ozs7O0FBeUVyRSxNQUFNLE9BQU8sZ0NBQWdDO0lBdkU3QztRQStFWSxxQkFBZ0IsR0FBRyxJQUFJLFlBQVksRUFHekMsQ0FBQztRQUVLLGlCQUFZLEdBQUcsSUFBSSxZQUFZLEVBR3JDLENBQUM7UUFFSyxjQUFTLEdBQUcsSUFBSSxZQUFZLEVBQWtCLENBQUM7UUFNekQsNkJBQXdCLEdBQUcsd0JBQXdCLENBQUM7S0FPckQ7SUFMQyxjQUFjLENBQUMsVUFBa0I7UUFDL0IsSUFBSSxDQUFDLE9BQU8sQ0FBQyxPQUFPLENBQ2xCLENBQUMsTUFBTSxFQUFFLEVBQUUsQ0FBQyxDQUFDLE1BQU0sQ0FBQyxhQUFhLENBQUMsVUFBVSxHQUFHLFVBQVUsQ0FBQyxDQUMzRCxDQUFDO0lBQ0osQ0FBQzs7NkhBOUJVLGdDQUFnQztpSEFBaEMsZ0NBQWdDLHFYQXJFakM7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7R0FtRVQ7MkZBRVUsZ0NBQWdDO2tCQXZFNUMsU0FBUzttQkFBQztvQkFDVCxRQUFRLEVBQUUseUNBQXlDO29CQUNuRCxRQUFRLEVBQUU7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7R0FtRVQ7aUJBQ0Y7OEJBRVUsSUFBSTtzQkFBWixLQUFLO2dCQUNHLEtBQUs7c0JBQWIsS0FBSztnQkFFRyxNQUFNO3NCQUFkLEtBQUs7Z0JBRUcsY0FBYztzQkFBdEIsS0FBSztnQkFFSSxnQkFBZ0I7c0JBQXpCLE1BQU07Z0JBS0csWUFBWTtzQkFBckIsTUFBTTtnQkFLRyxTQUFTO3NCQUFsQixNQUFNO2dCQUUwQixPQUFPO3NCQUF2QyxZQUFZO3VCQUFDLGlCQUFpQiIsInNvdXJjZXNDb250ZW50IjpbImltcG9ydCB7XG4gIENvbXBvbmVudCxcbiAgSW5wdXQsXG4gIE91dHB1dCxcbiAgRXZlbnRFbWl0dGVyLFxuICBUZW1wbGF0ZVJlZixcbiAgVmlld0NoaWxkcmVuLFxuICBFbGVtZW50UmVmLFxuICBRdWVyeUxpc3QsXG59IGZyb20gJ0Bhbmd1bGFyL2NvcmUnO1xuaW1wb3J0IHsgQ2FsZW5kYXJFdmVudCwgV2Vla0RheSB9IGZyb20gJ2NhbGVuZGFyLXV0aWxzJztcbmltcG9ydCB7IHRyYWNrQnlXZWVrRGF5SGVhZGVyRGF0ZSB9IGZyb20gJy4uLy4uLy4uL2NvbW1vbi91dGlsL3V0aWwnO1xuXG5AQ29tcG9uZW50KHtcbiAgc2VsZWN0b3I6ICdtd2wtY2FsZW5kYXItcmVzb3VyY2UtbW9udGgtdmlldy1oZWFkZXInLFxuICB0ZW1wbGF0ZTogYFxuICAgIDxuZy10ZW1wbGF0ZVxuICAgICAgI2RlZmF1bHRUZW1wbGF0ZVxuICAgICAgbGV0LWRheXM9XCJkYXlzXCJcbiAgICAgIGxldC1sb2NhbGU9XCJsb2NhbGVcIlxuICAgICAgbGV0LWRheUhlYWRlckNsaWNrZWQ9XCJkYXlIZWFkZXJDbGlja2VkXCJcbiAgICAgIGxldC1ldmVudERyb3BwZWQ9XCJldmVudERyb3BwZWRcIlxuICAgICAgbGV0LXRyYWNrQnlXZWVrRGF5SGVhZGVyRGF0ZT1cInRyYWNrQnlXZWVrRGF5SGVhZGVyRGF0ZVwiXG4gICAgICBsZXQtZHJhZ0VudGVyPVwiZHJhZ0VudGVyXCJcbiAgICA+XG4gICAgICA8ZGl2ICNoZWFkZXIgY2xhc3M9XCJjYWwtZGF5LWhlYWRlcnNcIiByb2xlPVwicm93XCI+XG4gICAgICAgIDxkaXYgY2xhc3M9XCJjYWwtaGVhZGVyXCIgc3R5bGU9XCJtaW4td2lkdGg6IDEyMHB4OyBib3JkZXItcmlnaHQ6IDBcIj48L2Rpdj5cbiAgICAgICAgPGRpdiAjc2Nyb2xsQ29udGFpbmVyIGNsYXNzPVwiY2FsLWhlYWRlci1zY3JvbGxhYmxlLWNvbnRhaW5lclwiPlxuICAgICAgICAgIDxkaXYgKm5nRm9yPVwibGV0IGRheSBvZiBkYXlzXCIgY2xhc3M9XCJjYWwtaGVhZGVyXCI+XG4gICAgICAgICAgICBUOiB7eyBkYXkuZGF0ZSB8IGNhbGVuZGFyRGF0ZSA6ICdnZXRXZWVrTnVtYmVyJyA6IGxvY2FsZSB9fVxuICAgICAgICAgIDwvZGl2PlxuICAgICAgICA8L2Rpdj5cbiAgICAgIDwvZGl2PlxuICAgICAgPGRpdiAjaGVhZGVyIGNsYXNzPVwiY2FsLWRheS1oZWFkZXJzXCIgcm9sZT1cInJvd1wiPlxuICAgICAgICA8ZGl2IGNsYXNzPVwiY2FsLWhlYWRlclwiIHN0eWxlPVwibWluLXdpZHRoOiAxMjBweDsgYm9yZGVyLXJpZ2h0OiAwXCI+PC9kaXY+XG4gICAgICAgIDxkaXYgI3Njcm9sbENvbnRhaW5lciBjbGFzcz1cImNhbC1oZWFkZXItc2Nyb2xsYWJsZS1jb250YWluZXJcIj5cbiAgICAgICAgICA8ZGl2XG4gICAgICAgICAgICBjbGFzcz1cImNhbC1oZWFkZXJcIlxuICAgICAgICAgICAgKm5nRm9yPVwibGV0IGRheSBvZiBkYXlzOyB0cmFja0J5OiB0cmFja0J5V2Vla0RheUhlYWRlckRhdGVcIlxuICAgICAgICAgICAgW2NsYXNzLmNhbC1wYXN0XT1cImRheS5pc1Bhc3RcIlxuICAgICAgICAgICAgW2NsYXNzLmNhbC10b2RheV09XCJkYXkuaXNUb2RheVwiXG4gICAgICAgICAgICBbY2xhc3MuY2FsLWZ1dHVyZV09XCJkYXkuaXNGdXR1cmVcIlxuICAgICAgICAgICAgW2NsYXNzLmNhbC13ZWVrZW5kXT1cImRheS5pc1dlZWtlbmRcIlxuICAgICAgICAgICAgW25nQ2xhc3NdPVwiZGF5LmNzc0NsYXNzXCJcbiAgICAgICAgICAgIChtd2xDbGljayk9XCJcbiAgICAgICAgICAgICAgZGF5SGVhZGVyQ2xpY2tlZC5lbWl0KHsgZGF5OiBkYXksIHNvdXJjZUV2ZW50OiAkZXZlbnQgfSlcbiAgICAgICAgICAgIFwiXG4gICAgICAgICAgICBtd2xEcm9wcGFibGVcbiAgICAgICAgICAgIGRyYWdPdmVyQ2xhc3M9XCJjYWwtZHJhZy1vdmVyXCJcbiAgICAgICAgICAgIChkcm9wKT1cIlxuICAgICAgICAgICAgICBldmVudERyb3BwZWQuZW1pdCh7XG4gICAgICAgICAgICAgICAgZXZlbnQ6ICRldmVudC5kcm9wRGF0YS5ldmVudCxcbiAgICAgICAgICAgICAgICBuZXdTdGFydDogZGF5LmRhdGVcbiAgICAgICAgICAgICAgfSlcbiAgICAgICAgICAgIFwiXG4gICAgICAgICAgICAoZHJhZ0VudGVyKT1cImRyYWdFbnRlci5lbWl0KHsgZGF0ZTogZGF5LmRhdGUgfSlcIlxuICAgICAgICAgICAgdGFiaW5kZXg9XCIwXCJcbiAgICAgICAgICAgIHJvbGU9XCJjb2x1bW5oZWFkZXJcIlxuICAgICAgICAgID5cbiAgICAgICAgICAgIDxiPnt7XG4gICAgICAgICAgICAgIGRheS5kYXRlIHwgY2FsZW5kYXJEYXRlIDogJ21vbnRoVmlld0NvbHVtbkhlYWRlcicgOiBsb2NhbGVcbiAgICAgICAgICAgIH19PC9iXG4gICAgICAgICAgICA+PGJyIC8+XG4gICAgICAgICAgICA8c3Bhbj57e1xuICAgICAgICAgICAgICBkYXkuZGF0ZSB8IGNhbGVuZGFyRGF0ZSA6ICdtb250aFZpZXdEYXlOdW1iZXInIDogbG9jYWxlXG4gICAgICAgICAgICB9fTwvc3Bhbj5cbiAgICAgICAgICA8L2Rpdj5cbiAgICAgICAgPC9kaXY+XG4gICAgICA8L2Rpdj5cbiAgICA8L25nLXRlbXBsYXRlPlxuICAgIDxuZy10ZW1wbGF0ZVxuICAgICAgW25nVGVtcGxhdGVPdXRsZXRdPVwiY3VzdG9tVGVtcGxhdGUgfHwgZGVmYXVsdFRlbXBsYXRlXCJcbiAgICAgIFtuZ1RlbXBsYXRlT3V0bGV0Q29udGV4dF09XCJ7XG4gICAgICAgIGRheXM6IGRheXMsXG4gICAgICAgIGxvY2FsZTogbG9jYWxlLFxuICAgICAgICBkYXlIZWFkZXJDbGlja2VkOiBkYXlIZWFkZXJDbGlja2VkLFxuICAgICAgICBldmVudERyb3BwZWQ6IGV2ZW50RHJvcHBlZCxcbiAgICAgICAgZHJhZ0VudGVyOiBkcmFnRW50ZXIsXG4gICAgICAgIHRyYWNrQnlXZWVrRGF5SGVhZGVyRGF0ZTogdHJhY2tCeVdlZWtEYXlIZWFkZXJEYXRlXG4gICAgICB9XCJcbiAgICA+XG4gICAgPC9uZy10ZW1wbGF0ZT5cbiAgYCxcbn0pXG5leHBvcnQgY2xhc3MgQ2FsZW5kYXJNb250aFZpZXdIZWFkZXJDb21wb25lbnQge1xuICBASW5wdXQoKSBkYXlzOiBXZWVrRGF5W107XG4gIEBJbnB1dCgpIHdlZWtzOiBudW1iZXJbXTtcblxuICBASW5wdXQoKSBsb2NhbGU6IHN0cmluZztcblxuICBASW5wdXQoKSBjdXN0b21UZW1wbGF0ZTogVGVtcGxhdGVSZWY8YW55PjtcblxuICBAT3V0cHV0KCkgZGF5SGVhZGVyQ2xpY2tlZCA9IG5ldyBFdmVudEVtaXR0ZXI8e1xuICAgIGRheTogV2Vla0RheTtcbiAgICBzb3VyY2VFdmVudDogTW91c2VFdmVudDtcbiAgfT4oKTtcblxuICBAT3V0cHV0KCkgZXZlbnREcm9wcGVkID0gbmV3IEV2ZW50RW1pdHRlcjx7XG4gICAgZXZlbnQ6IENhbGVuZGFyRXZlbnQ7XG4gICAgbmV3U3RhcnQ6IERhdGU7XG4gIH0+KCk7XG5cbiAgQE91dHB1dCgpIGRyYWdFbnRlciA9IG5ldyBFdmVudEVtaXR0ZXI8eyBkYXRlOiBEYXRlIH0+KCk7XG5cbiAgQFZpZXdDaGlsZHJlbignc2Nyb2xsQ29udGFpbmVyJykgaGVhZGVyczogUXVlcnlMaXN0PFxuICAgIEVsZW1lbnRSZWY8SFRNTERpdkVsZW1lbnQ+XG4gID47XG5cbiAgdHJhY2tCeVdlZWtEYXlIZWFkZXJEYXRlID0gdHJhY2tCeVdlZWtEYXlIZWFkZXJEYXRlO1xuXG4gIHNjcm9sbEVsZW1lbnRzKHNjcm9sbExlZnQ6IG51bWJlcik6IHZvaWQge1xuICAgIHRoaXMuaGVhZGVycy5mb3JFYWNoKFxuICAgICAgKGhlYWRlcikgPT4gKGhlYWRlci5uYXRpdmVFbGVtZW50LnNjcm9sbExlZnQgPSBzY3JvbGxMZWZ0KVxuICAgICk7XG4gIH1cbn1cbiJdfQ==
